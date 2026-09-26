@@ -1,0 +1,78 @@
+name: Build HYRAM Android QA APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - HYRAM_GOLF_RC24_SOURCE.zip
+      - .github/workflows/build-android-apk.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract RC24 source
+        run: unzip -q HYRAM_GOLF_RC24_SOURCE.zip
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Toolchain evidence
+        run: |
+          flutter --version
+          java -version
+          javac -version
+          flutter doctor -v
+      - name: Generate Android runner
+        working-directory: hyram_rc9
+        run: flutter create . --platforms=android --org com.hyram --project-name hyram_golf
+      - name: Configure foreground location
+        working-directory: hyram_rc9
+        run: python3 tool/configure_mobile_hosts.py android
+      - name: Fetch dependencies
+        working-directory: hyram_rc9
+        run: flutter pub get
+      - name: Analyze
+        working-directory: hyram_rc9
+        run: flutter analyze
+      - name: Internal tests
+        working-directory: hyram_rc9
+        run: flutter test test --dart-define=HYRAM_ENV=internal
+      - name: Production tests
+        working-directory: hyram_rc9
+        run: flutter test test
+      - name: Build debug APK
+        working-directory: hyram_rc9
+        run: flutter build apk --debug --dart-define=HYRAM_ENV=internal
+      - name: Verify APK and checksum
+        working-directory: hyram_rc9
+        run: |
+          test -s build/app/outputs/flutter-apk/app-debug.apk
+          sha256sum build/app/outputs/flutter-apk/app-debug.apk > build/app/outputs/flutter-apk/app-debug.apk.sha256
+      - name: Upload APK and checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: hyram-golf-qa-apk
+          path: |
+            hyram_rc9/build/app/outputs/flutter-apk/app-debug.apk
+            hyram_rc9/build/app/outputs/flutter-apk/app-debug.apk.sha256
+          if-no-files-found: error
+      - name: Preserve resolved dependencies
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hyram-build-metadata
+          path: |
+            hyram_rc9/pubspec.lock
+            hyram_rc9/android/app/build.gradle.kts
+            hyram_rc9/android/settings.gradle.kts
+            hyram_rc9/android/gradle/wrapper/gradle-wrapper.properties
+          if-no-files-found: ignore
