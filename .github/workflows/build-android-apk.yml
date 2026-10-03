@@ -2,13 +2,24 @@ name: Build HYRAM Android QA APK
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     paths:
       - HYRAM_GOLF_RC24_SOURCE.zip
+      - qa/**
+      - .github/workflows/build-android-apk.yml
+  push:
+    branches: [main]
+    paths:
+      - HYRAM_GOLF_RC24_SOURCE.zip
+      - qa/**
       - .github/workflows/build-android-apk.yml
 
 permissions:
   contents: read
+
+concurrency:
+  group: hyram-android-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -16,21 +27,25 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: Extract RC24 source
-        run: unzip -q HYRAM_GOLF_RC24_SOURCE.zip
+      - name: Extract and patch RC24 source
+        run: |
+          unzip -q HYRAM_GOLF_RC24_SOURCE.zip
+          cd hyram_rc9
+          patch --batch --forward -p1 < ../qa/rc24-ui-fixes.patch
+          mkdir -p ../evidence
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.47.5'
           channel: stable
+          cache: true
       - name: Toolchain evidence
         run: |
-          flutter --version
-          java -version
-          javac -version
-          flutter doctor -v
+          set -euo pipefail
+          { flutter --version; dart --version; adb version; java -version; javac -version; flutter doctor -v; } 2>&1 | tee evidence/toolchain.log
       - name: Generate Android runner
         working-directory: hyram_rc9
         run: flutter create . --platforms=android --org com.hyram --project-name hyram_golf
@@ -42,16 +57,38 @@ jobs:
         run: flutter pub get
       - name: Analyze
         working-directory: hyram_rc9
-        run: flutter analyze
+        run: |
+          set -o pipefail
+          flutter analyze 2>&1 | tee ../evidence/analyze.log
       - name: Internal tests
         working-directory: hyram_rc9
-        run: flutter test test --dart-define=HYRAM_ENV=internal
+        run: |
+          set -o pipefail
+          flutter test test --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/internal-tests.log
       - name: Production tests
         working-directory: hyram_rc9
-        run: flutter test test
+        run: |
+          set -o pipefail
+          flutter test test 2>&1 | tee ../evidence/production-tests.log
+      - name: Enable runner access to Android virtualization
+        run: |
+          test -c /dev/kvm
+          sudo chown "$(id -u):$(id -g)" /dev/kvm
+      - name: Android integration gate
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          profile: pixel_2
+          disable-animations: true
+          script: |
+            cd hyram_rc9 && bash -o pipefail -c 'flutter test integration_test/app_flow_test.dart -d emulator-5554 --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/android-integration.log'
       - name: Build debug APK
         working-directory: hyram_rc9
-        run: flutter build apk --debug --dart-define=HYRAM_ENV=internal
+        run: |
+          set -o pipefail
+          flutter build apk --debug --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/apk-build.log
       - name: Verify APK and checksum
         working-directory: hyram_rc9
         run: |
@@ -65,14 +102,15 @@ jobs:
             hyram_rc9/build/app/outputs/flutter-apk/app-debug.apk
             hyram_rc9/build/app/outputs/flutter-apk/app-debug.apk.sha256
           if-no-files-found: error
-      - name: Preserve resolved dependencies
+      - name: Preserve gate evidence and dependencies
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: hyram-build-metadata
+          name: hyram-build-evidence
           path: |
+            evidence/
             hyram_rc9/pubspec.lock
             hyram_rc9/android/app/build.gradle.kts
             hyram_rc9/android/settings.gradle.kts
             hyram_rc9/android/gradle/wrapper/gradle-wrapper.properties
-          if-no-files-found: ignore
+          if-no-files-found: warn
