@@ -33,6 +33,16 @@ jobs:
           cd hyram_rc9
           patch --batch --forward -p1 < ../qa/rc24-ui-fixes.patch
           mkdir -p ../evidence
+      - name: Reserve disk space for Android build and emulator
+        run: |
+          set -euo pipefail
+          df -h / | tee evidence/disk-before.log
+          # These are unused preinstalled toolchains on this disposable runner.
+          # Keep Android SDK/NDK, Java, Flutter and all repository files.
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          df -h / | tee evidence/disk-after.log
+          available_kb=$(df -Pk / | awk 'NR==2 {print $4}')
+          test "$available_kb" -ge 15728640
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -83,7 +93,6 @@ jobs:
           arch: x86_64
           target: google_apis
           profile: pixel_2
-          disk-size: 2048M
           disable-animations: true
           script: |
             cd hyram_rc9 && bash -o pipefail -c 'flutter test integration_test/app_flow_test.dart -d emulator-5554 --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/android-integration.log'
