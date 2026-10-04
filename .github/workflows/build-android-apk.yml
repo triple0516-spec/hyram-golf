@@ -83,6 +83,7 @@ jobs:
           arch: x86_64
           target: google_apis
           profile: pixel_2
+          disk-size: 2048M
           disable-animations: true
           script: |
             cd hyram_rc9 && bash -o pipefail -c 'flutter test integration_test/app_flow_test.dart -d emulator-5554 --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/android-integration.log'
