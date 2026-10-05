@@ -100,11 +100,35 @@ jobs:
         run: |
           set -o pipefail
           flutter test test 2>&1 | tee ../evidence/production-tests.log
+      - name: Limit Gradle resource usage
+        working-directory: hyram_rc9
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("android/gradle.properties")
+          limits = {
+              "org.gradle.jvmargs": "-Xmx2G -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError",
+              "org.gradle.workers.max": "2",
+              "org.gradle.parallel": "false",
+              "kotlin.daemon.jvmargs": "-Xmx512m",
+          }
+          lines = p.read_text().splitlines()
+          lines = [line for line in lines if line.split("=", 1)[0].strip() not in limits]
+          p.write_text("\n".join(lines + [f"{k}={v}" for k, v in limits.items()]) + "\n")
+          PY
+      - name: Precompile integration APK before starting emulator
+        working-directory: hyram_rc9
+        timeout-minutes: 20
+        run: |
+          set -euo pipefail
+          { date -u; free -h; df -h /; } | tee ../evidence/resources-before-build.log
+          flutter build apk --debug --target=integration_test/app_flow_test.dart --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/integration-prebuild.log
       - name: Enable runner access to Android virtualization
         run: |
           test -c /dev/kvm
           sudo chown "$(id -u):$(id -g)" /dev/kvm
       - name: Android integration gate
+        timeout-minutes: 15
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -113,7 +137,7 @@ jobs:
           profile: pixel_2
           disable-animations: true
           script: |
-            cd hyram_rc9 && bash -euo pipefail -c 'test "$(adb -s emulator-5554 shell getprop sys.boot_completed | tr -d "\r")" = "1"; flutter test integration_test/app_flow_test.dart -d emulator-5554 --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/android-integration.log'
+            cd hyram_rc9 && env -u BASH_ENV bash --noprofile --norc -eo pipefail -c 'set -u; test "$(adb -s emulator-5554 shell getprop sys.boot_completed | tr -d "\r")" = "1"; flutter test integration_test/app_flow_test.dart -d emulator-5554 --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/android-integration.log'
       - name: Build debug APK
         working-directory: hyram_rc9
         run: |
@@ -132,6 +156,10 @@ jobs:
             hyram_rc9/build/app/outputs/flutter-apk/app-debug.apk
             hyram_rc9/build/app/outputs/flutter-apk/app-debug.apk.sha256
           if-no-files-found: error
+      - name: Record final runner resources
+        if: always()
+        run: |
+          { date -u; free -h; df -h /; ps -eo pid,comm,%cpu,%mem --sort=-%mem | head -25; } > evidence/resources-final.log
       - name: Preserve gate evidence and dependencies
         if: always()
         uses: actions/upload-artifact@v4
