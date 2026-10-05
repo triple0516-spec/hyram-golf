@@ -45,17 +45,19 @@
    });
 --- a/integration_test/app_flow_test.dart
 +++ b/integration_test/app_flow_test.dart
-@@ -13,6 +13,9 @@
+@@ -13,6 +13,11 @@
      expect(find.text('로그인'), findsWidgets);
      await tester.enterText(find.byType(TextField).at(0), 'qa@hyram.golf');
      await tester.enterText(find.byType(TextField).at(1), '12345678');
 +    FocusManager.instance.primaryFocus?.unfocus();
 +    await tester.pumpAndSettle();
 +    await tester.ensureVisible(find.widgetWithText(FilledButton,'로그인'));
++    await tester.pumpAndSettle();
++    expect(find.widgetWithText(FilledButton,'로그인').hitTestable(), findsOneWidget);
      await tester.tap(find.widgetWithText(FilledButton,'로그인'));
      await tester.pumpAndSettle();
  
-@@ -23,9 +26,15 @@
+@@ -23,9 +28,19 @@
      await tester.pumpAndSettle();
      expect(find.text('부킹 · 타석 · 결제'), findsOneWidget);
  
@@ -63,16 +65,20 @@
 +    final booking = find.widgetWithText(TextButton, '예약 테스트').first;
 +    await tester.scrollUntilVisible(booking, 250,
 +      scrollable: find.byType(Scrollable).first);
++    // Ensure scroll/layout has painted before deriving the tap coordinate.
++    await tester.pumpAndSettle();
++    expect(booking.hitTestable(), findsOneWidget);
 +    await tester.tap(booking);
      await tester.pumpAndSettle();
      expect(find.text('결제'), findsOneWidget);
 +    await tester.scrollUntilVisible(
 +      find.byType(DropdownButtonFormField<String>), 250,
 +      scrollable: find.byType(Scrollable).first);
++    await tester.pumpAndSettle();
      expect(find.text('내부 QA 결제 결과'), findsOneWidget);
  
      await tester.pageBack();
-@@ -37,5 +46,6 @@
+@@ -37,5 +52,6 @@
      await tester.tap(find.text('MY HYRAM'));
      await tester.pumpAndSettle();
      expect(find.text('내 정보 · 연결 · 차량'), findsOneWidget);
