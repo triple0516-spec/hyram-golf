@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Validate local replay syntax
+        run: bash -n qa/validate_rc24.sh
       - name: Extract and patch RC24 source
         run: |
           unzip -q HYRAM_GOLF_RC24_SOURCE.zip
