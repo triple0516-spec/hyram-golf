@@ -1,0 +1,87 @@
+--- a/lib/widgets/luxury_widgets.dart
++++ b/lib/widgets/luxury_widgets.dart
+@@ -14,17 +14,24 @@
+   const LuxuryCard({super.key, required this.child, this.padding = const EdgeInsets.all(18), this.onTap});
+   @override
+   Widget build(BuildContext context) {
+-    final card = Container(
+-      padding: padding,
++    return Container(
+       decoration: BoxDecoration(
+         color: HyramColors.panel,
+         borderRadius: BorderRadius.circular(24),
+         border: Border.all(color: HyramColors.gold.withValues(alpha: .14)),
+         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: .35), blurRadius: 22, offset: const Offset(0, 12))],
+       ),
+-      child: child,
++      child: Material(
++        type: MaterialType.transparency,
++        borderRadius: BorderRadius.circular(24),
++        clipBehavior: Clip.antiAlias,
++        child: InkWell(
++          onTap: onTap,
++          borderRadius: BorderRadius.circular(24),
++          child: Padding(padding: padding, child: child),
++        ),
++      ),
+     );
+-    return onTap == null ? card : InkWell(onTap: onTap, borderRadius: BorderRadius.circular(24), child: card);
+   }
+ }
+ 
+--- a/test/commercial_ui_test.dart
++++ b/test/commercial_ui_test.dart
+@@ -25,6 +25,11 @@
+       final button = tester.widget<FilledButton>(find.widgetWithText(FilledButton, '결제 연동 전'));
+       expect(button.onPressed, isNull);
+     } else {
++      await tester.scrollUntilVisible(
++        find.byType(DropdownButtonFormField<String>),
++        250,
++        scrollable: find.byType(Scrollable).first,
++      );
+       expect(find.text('내부 QA 결제 결과'), findsOneWidget);
+     }
+   });
+--- a/integration_test/app_flow_test.dart
++++ b/integration_test/app_flow_test.dart
+@@ -13,6 +13,11 @@
+     expect(find.text('로그인'), findsWidgets);
+     await tester.enterText(find.byType(TextField).at(0), 'qa@hyram.golf');
+     await tester.enterText(find.byType(TextField).at(1), '12345678');
++    FocusManager.instance.primaryFocus?.unfocus();
++    await tester.pumpAndSettle();
++    await tester.ensureVisible(find.widgetWithText(FilledButton,'로그인'));
++    await tester.pumpAndSettle();
++    expect(find.widgetWithText(FilledButton,'로그인').hitTestable(), findsOneWidget);
+     await tester.tap(find.widgetWithText(FilledButton,'로그인'));
+     await tester.pumpAndSettle();
+ 
+@@ -23,9 +28,19 @@
+     await tester.pumpAndSettle();
+     expect(find.text('부킹 · 타석 · 결제'), findsOneWidget);
+ 
+-    await tester.tap(find.text('예약').first);
++    final booking = find.widgetWithText(TextButton, '예약 테스트').first;
++    await tester.scrollUntilVisible(booking, 250,
++      scrollable: find.byType(Scrollable).first);
++    // Ensure scroll/layout has painted before deriving the tap coordinate.
++    await tester.pumpAndSettle();
++    expect(booking.hitTestable(), findsOneWidget);
++    await tester.tap(booking);
+     await tester.pumpAndSettle();
+     expect(find.text('결제'), findsOneWidget);
++    await tester.scrollUntilVisible(
++      find.byType(DropdownButtonFormField<String>), 250,
++      scrollable: find.byType(Scrollable).first);
++    await tester.pumpAndSettle();
+     expect(find.text('내부 QA 결제 결과'), findsOneWidget);
+ 
+     await tester.pageBack();
+@@ -37,5 +52,6 @@
+     await tester.tap(find.text('MY HYRAM'));
+     await tester.pumpAndSettle();
+     expect(find.text('내 정보 · 연결 · 차량'), findsOneWidget);
++    expect(tester.takeException(), isNull);
+   });
+ }
