@@ -31,6 +31,16 @@ Historical local results on 2026-10-04 are not current device evidence:
 analyze and internal/production widget suites passed; integration was BLOCKED because
 no supported device was attached, so that local APK gate was not executed.
 
+## New-head rerun failure and correction
+Run https://github.com/triple0516-spec/hyram-golf/actions/runs/37299563811
+at head ebf20d512b1ee731ee068b1d0cd13f89cf6b40a9 failed in integration:
+the booking button tap missed its hit target, then the expected checkout title was absent.
+Compilation, emulator boot and installation succeeded; final app APK build/upload was skipped.
+This is a UI interaction failure, not the earlier device/runner blocker.
+The follow-up patch waits for scrolling/layout to settle and asserts hit-testability before
+login/booking taps; checkout assertions remain intact. Clean patch replay was verified.
+The correction requires a new successful Android CI run; it is not yet a device PASS.
+
 ## Local replay
 Use Flutter 3.47.5, Dart bundled with it, JDK 17 and a full Android SDK.
 Connect and authorize an Android device or boot an emulator, then run:
