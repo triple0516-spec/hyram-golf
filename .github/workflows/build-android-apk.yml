@@ -64,6 +64,24 @@ jobs:
       - name: Configure foreground location
         working-directory: hyram_rc9
         run: python3 tool/configure_mobile_hosts.py android
+      - name: Configure Android minimum SDK for health
+        working-directory: hyram_rc9
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          path = Path("android/app/build.gradle.kts")
+          source = path.read_text()
+          updated, count = re.subn(
+              r"(?m)^(\s*)minSdk\s*=\s*[^\n]+$",
+              r"\1minSdk = 26",
+              source,
+          )
+          if count != 1:
+              raise SystemExit(f"Expected one minSdk assignment, found {count}")
+          path.write_text(updated)
+          print("Configured minSdk = 26")
+          PY
       - name: Fetch dependencies
         working-directory: hyram_rc9
         run: flutter pub get
@@ -95,7 +113,7 @@ jobs:
           profile: pixel_2
           disable-animations: true
           script: |
-            cd hyram_rc9 && bash -o pipefail -c 'flutter test integration_test/app_flow_test.dart -d emulator-5554 --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/android-integration.log'
+            cd hyram_rc9 && bash -euo pipefail -c 'test "$(adb -s emulator-5554 shell getprop sys.boot_completed | tr -d "\r")" = "1"; flutter test integration_test/app_flow_test.dart -d emulator-5554 --dart-define=HYRAM_ENV=internal 2>&1 | tee ../evidence/android-integration.log'
       - name: Build debug APK
         working-directory: hyram_rc9
         run: |
