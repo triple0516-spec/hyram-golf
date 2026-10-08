@@ -82,8 +82,8 @@
 +                    style: TextStyle(fontWeight: FontWeight.w800)),
 +                Text('HYRAM WARRANTY · $warranty'),
 +                Text(productId == null
-+                    ? 'A/S 라벨 관리번호 발급'
-+                    : '관리번호 $productId'),
++                    ? '관리번호 HG-YYMMDD-001 · 출고일 기준'
++                    : '관리번호 $productId · 출고일 기준 보증'),
 +              ],
 +            ),
 +          ],
