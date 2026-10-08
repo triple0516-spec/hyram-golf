@@ -82,7 +82,7 @@
 +                    style: TextStyle(fontWeight: FontWeight.w800)),
 +                Text('HYRAM WARRANTY · $warranty'),
 +                Text(productId == null
-+                    ? '제품 등록 시 관리번호 · QR 활성화'
++                    ? 'A/S 라벨 관리번호 발급'
 +                    : '관리번호 $productId'),
 +              ],
 +            ),
