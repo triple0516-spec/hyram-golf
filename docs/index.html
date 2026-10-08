@@ -1,20 +1,44 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HYRAM GOLF | 하람골프</title><meta name="description" content="HYRAM GOLF 하람골프 - 골프클럽 판매, 피팅, 레슨 예약 및 상담">
+<title>HYRAM GOLF | 하람골프</title>
+<meta name="description" content="HYRAM GOLF 하람골프 | 골프클럽 판매, 커스텀 피팅, 레슨, 중고클럽 및 부킹 상담">
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0d0f0e;color:#f5f3ed;font-family:Arial,"Noto Sans KR",sans-serif}
-main{max-width:960px;margin:auto;padding:72px 24px}.brand{letter-spacing:.22em;font-size:14px;color:#c7b88a}
-h1{font-size:clamp(42px,8vw,76px);margin:18px 0 10px}.sub{font-size:20px;color:#cbc9c2;line-height:1.7}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:42px 0}
-.card{border:1px solid #343733;border-radius:18px;padding:24px;background:#151815}.card h2{font-size:18px;margin-top:0}.card p{color:#b8bab5;line-height:1.6}
-.cta{display:inline-block;background:#f0ead8;color:#111;padding:15px 22px;border-radius:999px;text-decoration:none;font-weight:700}
-footer{margin-top:64px;padding-top:24px;border-top:1px solid #2c2f2c;color:#92958f;font-size:13px;line-height:1.7}
-</style></head><body><main>
-<div class="brand">HYRAM GOLF · 하람골프</div><h1>YOUR GAME,<br>REFINED.</h1>
-<p class="sub">클럽 선택부터 피팅, 레슨까지.<br>골프를 더 쉽고 정확하게 연결합니다.</p>
-<section class="cards"><div class="card"><h2>GOLF CLUB</h2><p>골프클럽 및 골프용품 상담·판매</p></div>
-<div class="card"><h2>FITTING</h2><p>스윙과 플레이 스타일에 맞춘 피팅 상담</p></div>
-<div class="card"><h2>LESSON</h2><p>골프 레슨 상담 및 예약 안내</p></div></section>
-<a class="cta" href="https://open.kakao.com/o/sFKnP4Qi" target="_blank" rel="noopener">카카오톡으로 상담하기</a>
-<footer><strong>HYRAM GOLF | 하람골프</strong><br>골프클럽 판매 · 피팅 · 레슨 예약<br><br>상품·서비스 관련 문의는 카카오톡 상담을 이용해 주세요.</footer>
-</main></body></html>
+:root{--bg:#090c0a;--panel:#121713;--line:#293129;--text:#f5f2e9;--muted:#aeb5ae;--gold:#c9b77f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Noto Sans KR",sans-serif;line-height:1.65}a{color:inherit;text-decoration:none}.wrap{max-width:1160px;margin:auto;padding:0 22px}
+header{position:sticky;top:0;z-index:20;background:#090c0aee;border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:900;letter-spacing:.18em}.links{display:flex;gap:17px;font-size:12px}.talk{border:1px solid #667066;padding:9px 14px;border-radius:999px}
+.hero{padding:105px 0 82px;background:radial-gradient(circle at 80% 10%,#253326 0,transparent 42%),linear-gradient(135deg,#0c110d,#121a13)}.eyebrow,.tag{color:var(--gold);font-size:11px;letter-spacing:.18em}.hero h1{font-size:clamp(44px,8vw,82px);line-height:.95;margin:14px 0 20px}.hero p{max-width:690px;color:#c8cdc8;font-size:18px}.btn{display:inline-block;margin:14px 8px 0 0;padding:13px 20px;background:#f3eee1;color:#111;font-weight:800;border-radius:5px}.btn.alt{background:transparent;color:#fff;border:1px solid #687168}
+.section{padding:68px 0}.section.alt{background:#0f1410}.section h2{font-size:31px;margin:0 0 7px}.sub{color:var(--muted);margin:0 0 28px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:var(--panel);border:1px solid var(--line);padding:25px;min-height:205px;border-radius:10px}.card h3{margin:9px 0;font-size:21px}.card p{color:var(--muted);font-size:14px}.service{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.service div,.notice{border:1px solid var(--line);padding:22px;border-radius:10px}.notice{background:#ede7d8;color:#171917}.notice .btn{background:#111;color:#fff}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.step{padding:22px;border-left:2px solid var(--gold);background:#101511}.step b{display:block;margin-bottom:7px}
+.policy{display:grid;grid-template-columns:1fr 1fr;gap:16px}.policy article{padding:22px;border:1px solid var(--line);border-radius:10px}.policy h3{margin-top:0}.policy p{color:var(--muted);font-size:13px}
+.footer{padding:42px 0;border-top:1px solid var(--line);color:#9da39d;font-size:12px}.biz{margin-top:15px;line-height:1.9}.warn{font-size:12px;color:#aeb5ae;margin-top:16px}
+@media(max-width:780px){.links{display:none}.grid,.service,.steps,.policy{grid-template-columns:1fr}.hero{padding:72px 0 58px}.hero p{font-size:16px}.nav{min-height:62px}.card{min-height:0}}
+</style></head><body>
+<header><div class="wrap nav"><a class="brand" href="#">HYRAM GOLF</a><nav class="links"><a href="#shop">SHOP</a><a href="#used">USED</a><a href="#service">FITTING · LESSON</a><a href="#booking">BOOKING</a><a href="#guide">GUIDE</a></nav><a class="talk" href="https://open.kakao.com/o/sFKnP4Qi" target="_blank" rel="noopener">상담하기</a></div></header>
+<main>
+<section class="hero"><div class="wrap"><div class="eyebrow">HYRAM GOLF · 하람골프</div><h1>YOUR GAME,<br>REFINED.</h1><p>클럽 선택부터 커스텀 피팅, 레슨, 중고클럽, 골프 부킹까지. 복잡한 골프 서비스를 한 곳에서 더 쉽고 정확하게 연결합니다.</p><a class="btn" href="#shop">클럽 보기</a><a class="btn alt" href="https://open.kakao.com/o/sFKnP4Qi" target="_blank" rel="noopener">카카오 상담</a></div></section>
+
+<section id="shop" class="section"><div class="wrap"><h2>NEW CLUB</h2><p class="sub">재고·가격·세부 옵션은 상담 후 확정됩니다. 실제 재고가 확인되지 않은 상품을 임의로 판매하지 않습니다.</p><div class="grid">
+<div class="card"><span class="tag">TITLEIST · IRON</span><h3>T300 4–P</h3><p>N.S.PRO 850 R / 950 S 등 세부 구성 상담</p><a class="btn alt" href="https://open.kakao.com/o/sFKnP4Qi">재고·가격 문의</a></div>
+<div class="card"><span class="tag">TITLEIST · DRIVER</span><h3>GT2 / GT3</h3><p>로프트·샤프트·Flex 등 플레이 스타일에 맞춘 구성 상담</p><a class="btn alt" href="https://open.kakao.com/o/sFKnP4Qi">구성 문의</a></div>
+<div class="card"><span class="tag">MULTI BRAND</span><h3>SELECT CLUB</h3><p>Titleist · TaylorMade · PING · Callaway · PXG 등 모델별 상담</p><a class="btn alt" href="https://open.kakao.com/o/sFKnP4Qi">모델 문의</a></div>
+</div></div></section>
+
+<section id="used" class="section alt"><div class="wrap"><h2>USED CLUB</h2><p class="sub">중고 재고는 수시로 달라집니다. 모델·샤프트·Flex·희망 예산을 알려주시면 확인 후 안내합니다.</p><div class="grid">
+<div class="card"><h3>중고클럽 찾기</h3><p>원하는 사양과 예산을 기준으로 재고를 상담합니다.</p></div>
+<div class="card"><h3>내 클럽 판매</h3><p>사진과 모델 정보를 바탕으로 매입 가능 여부를 상담합니다.</p></div>
+<div class="card"><h3>보상판매 상담</h3><p>기존 클럽 상담부터 새 클럽 선택까지 한 흐름으로 연결합니다.</p></div>
+</div><a class="btn" href="https://open.kakao.com/o/sFKnP4Qi">중고클럽 상담하기</a></div></section>
+
+<section id="service" class="section"><div class="wrap"><h2>FITTING · LESSON</h2><p class="sub">장비와 플레이를 따로 보지 않는 HYRAM GOLF 서비스.</p><div class="service"><div><b>FITTING</b><p>클럽 피팅 상담·예약</p></div><div><b>LESSON</b><p>골프 레슨 상담·예약</p></div><div><b>PRACTICE</b><p>연습장 이용 상담</p></div><div><b>CARE</b><p>클럽 구성·관리 상담</p></div></div></div></section>
+
+<section id="booking" class="section alt"><div class="wrap"><h2>HYRAM CONCIERGE</h2><p class="sub">제휴 실시간 예약 연동 전에는 상담 접수 방식으로 운영합니다.</p><div class="notice"><b>부킹 요청</b><br>희망 지역 · 날짜 · 시간대 · 인원 · 예산을 보내주시면 상담 가능한 범위에서 안내합니다.<br><a class="btn" href="https://open.kakao.com/o/sFKnP4Qi">부킹 상담 시작</a></div></div></section>
+
+<section class="section"><div class="wrap"><h2>HOW IT WORKS</h2><p class="sub">문의부터 이용까지 간단하게.</p><div class="steps"><div class="step"><b>01 · 상담 접수</b>원하는 상품 또는 서비스를 알려주세요.</div><div class="step"><b>02 · 재고·조건 확인</b>가격, 옵션, 일정 등 실제 가능 조건을 확인합니다.</div><div class="step"><b>03 · 주문·예약 안내</b>확인된 조건을 기준으로 결제 또는 예약 절차를 안내합니다.</div></div><p class="warn">온라인 카드결제는 PG 계약 및 운영 준비가 완료된 뒤 활성화됩니다.</p></div></section>
+
+<section id="guide" class="section alt"><div class="wrap"><h2>CUSTOMER GUIDE</h2><p class="sub">주문 전 주요 안내사항입니다.</p><div class="policy">
+<article><h3>배송 · 교환 · 환불</h3><p>배송 일정과 배송비는 상품별 주문 확정 전에 안내합니다. 교환·환불 가능 여부와 비용은 상품 상태, 주문 형태 및 관련 법령에 따라 안내하며, 개별 주문·커스텀 상품은 제작 또는 주문 진행 전 취소 가능 범위를 별도로 고지합니다. 상품 하자·오배송 등 판매자 책임 사유는 관련 법령에 따라 처리합니다.</p></article>
+<article><h3>상담 · 개인정보 안내</h3><p>상담 과정에서 제공된 연락처와 주문·예약 정보는 상담 및 거래 처리 목적으로 사용합니다. 외부 상담 채널 이용 시 해당 서비스의 개인정보 처리 기준도 적용될 수 있습니다. 정식 개인정보처리방침과 이용약관은 결제·회원 기능 활성화 전에 별도 게시합니다.</p></article>
+</div></div></section>
+</main>
+<footer class="footer"><div class="wrap"><b>HYRAM GOLF · 하람골프</b><div class="biz">대표자 김준용 · 사업자등록번호 512-61-00713 · 일반과세자<br>사업장: 부산광역시 사상구 백양대로342번길 17, 207동 1501호<br>대표 연락처: 010-3131-6436<br>통신판매업 신고: 접수 진행 중 (접수번호 20261008-95007881)</div><p>골프클럽 판매 · 커스텀 피팅 · 레슨 · 중고클럽 · 골프 부킹 상담</p><p>© 2026 HYRAM GOLF. All rights reserved.</p></div></footer>
+</body></html>
