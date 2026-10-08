@@ -45,7 +45,7 @@
    });
 --- a/lib/widgets/hyram_warranty_label.dart
 +++ b/lib/widgets/hyram_warranty_label.dart
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,48 @@
 +import 'package:flutter/material.dart';
 +
 +class HyramWarrantyLabel extends StatelessWidget {
