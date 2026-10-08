@@ -117,7 +117,7 @@ abstract final class HyramMembershipColors {
           grep -q '0xFFC9A44C' lib/theme/hyram_membership_colors.dart
           grep -q '0xFFB8E3EA' lib/theme/hyram_membership_colors.dart
           grep -q '0xFF111311' lib/theme/hyram_membership_colors.dart
-          echo "PASS: HYRAM app visual contract verified"
+          echo "PASS - HYRAM app visual contract verified"
       - name: Reserve disk space for Android build and emulator
         run: |
           set -euo pipefail
