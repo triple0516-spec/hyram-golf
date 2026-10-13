@@ -15,22 +15,28 @@ if theme_file is None:
     raise SystemExit("BLOCKED - HyramColors definition not found; refusing guessed patch")
 
 text = theme_file.read_text()
+# RC24 uses inferred Color types and legacy semantic names. Keep the public
+# names used throughout the app, but change every surface/text pair together.
 palette = {
-    "bg": "0xFFF7F5EE",
+    "black": "0xFFF7F5EE",
     "panel": "0xFFFFFDF8",
+    "panel2": "0xFFECE9DF",
     "gold": "0xFFA88436",
-    "text": "0xFF183126",
+    "champagne": "0xFF806323",
+    "ivory": "0xFF183126",
     "muted": "0xFF66756D",
 }
-changed = 0
 for name, value in palette.items():
-    pattern = rf"(static\s+const\s+Color\s+{name}\s*=\s*(?:const\s+)?Color\()0x[0-9A-Fa-f]+(\)\s*;)"
-    updated, count = re.subn(pattern, rf"\g<1>{value}\g<2>", text)
-    if count:
-        text = updated
-        changed += count
-if changed == 0:
-    raise SystemExit(f"BLOCKED - {theme_file} palette shape is unknown; refusing unsafe theme rewrite")
+    pattern = rf"(static\s+const\s+(?:Color\s+)?{name}\s*=\s*(?:const\s+)?Color\()0x[0-9A-Fa-f]+(\)\s*;)"
+    text, count = re.subn(pattern, rf"\g<1>{value}\g<2>", text)
+    if count != 1:
+        raise SystemExit(f"BLOCKED - expected one {name} declaration in {theme_file}, found {count}")
+# A light surface with ThemeData.dark would leave inherited text unreadable.
+for factory in ("ThemeData", "ColorScheme"):
+    pattern = rf"\b{factory}\.(?:dark|light)\("
+    text, count = re.subn(pattern, f"{factory}.light(", text)
+    if count != 1:
+        raise SystemExit(f"BLOCKED - expected one {factory} constructor, found {count}")
 theme_file.write_text(text)
 
 membership_hits = 0

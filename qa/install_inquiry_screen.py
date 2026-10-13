@@ -36,10 +36,10 @@ class _HyramServiceInquiryState extends State<HyramServiceInquiry> {
       child: ListView(padding: const EdgeInsets.all(20), children: [
         const Text('상담 초안 작성', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        const Text('현재 자동 예약·결제·접수 서버는 연결되지 않았습니다. 상담 내용을 확인한 후 카카오톡에서 최종 접수해 주세요.'),
+        const Text('현재 자동 예약·결제·접수 서버는 연결되지 않았습니다. 카카오톡 그룹 상담방에서는 이름·연락처를 게시하지 마세요.'),
         const SizedBox(height: 20),
         DropdownButtonFormField<String>(
-          value: service,
+          initialValue: service,
           isExpanded: true,
           decoration: const InputDecoration(labelText: '서비스'),
           items: services.map((s) => DropdownMenuItem(value: s, child: Text(s, overflow: TextOverflow.ellipsis))).toList(),
@@ -76,8 +76,8 @@ class _HyramServiceInquiryState extends State<HyramServiceInquiry> {
           const SizedBox(height: 16),
           Text('서비스: $service\n성함: ${name.text.trim()}\n연락처: ${phone.text.trim()}\n요청: ${memo.text.trim()}'),
           const SizedBox(height: 8),
-          const Text('아직 접수되지 않았습니다. 카카오톡에서 최종 접수해 주세요.'),
-          const SelectableText('https://open.kakao.com/o/sFKnP4Qi'),
+          const Text('아직 접수되지 않았습니다. 공개 그룹에서는 개인정보를 제외한 상담 내용만 전달해 주세요.'),
+          const SelectableText('https://open.kakao.com/o/gaQIRfSi'),
         ],
       ]),
     )),

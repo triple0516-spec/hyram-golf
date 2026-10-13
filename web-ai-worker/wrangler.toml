@@ -1,0 +1,7 @@
+name = "hyram-ai-concierge"
+main = "worker.js"
+compatibility_date = "2026-10-09"
+
+# Configure secrets with: npx wrangler secret put OPENAI_API_KEY
+# Configure ALLOWED_ORIGIN in Cloudflare Worker settings to exact https:// site origin.
+# Apply Cloudflare WAF / rate limiting before public deployment.
