@@ -41,6 +41,9 @@ jobs:
       - name: Add HYRAM consultation screen
         working-directory: hyram_rc9
         run: python3 ../qa/install_inquiry_screen.py
+      - name: Add native HYRAM MY FITTING hub
+        working-directory: hyram_rc9
+        run: python3 ../qa/install_my_fitting_native.py
       - name: Verify HYRAM visual contract
         working-directory: hyram_rc9
         run: python3 ../qa/verify_light_premium.py
