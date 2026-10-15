@@ -151,6 +151,33 @@
     const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
     const u=URL.createObjectURL(blob),a=make('a');a.href=u;a.download='hyram-my-fitting-'+today()+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1200);
   });
+
+  $('importBtn').addEventListener('click',()=>$('importFile').click());
+  $('importFile').addEventListener('change',async e=>{
+    const file=e.target.files && e.target.files[0];
+    if(!file)return;
+    e.target.value='';
+    if(file.size>1024*1024){showStatus('shareStatus','백업 파일이 너무 큽니다. (최대 1MB)');return;}
+    try{
+      const json=JSON.parse(await file.text());
+      if(json.format!=='hyram-fitting-local-v1'||!json.data)throw Error('형식 불일치');
+      const next=json.data;
+      if(!['measurements','builds','care'].every(k=>Array.isArray(next[k])&&next[k].length<=1000))throw Error('목록 범위 초과');
+      for(const m of next.measurements){
+        if(!m||!['before','after','check'].includes(m.stage)||!['launch','spin','direction','carry'].every(k=>Number.isFinite(m[k]))||typeof m.club!=='string'||m.club.length>70)throw Error('측정 데이터 이상');
+      }
+      for(const b of next.builds){
+        if(!b||typeof b.brand!=='string'||b.brand.length>50||typeof b.head!=='string'||b.head.length>70||typeof b.shaft!=='string'||b.shaft.length>90)throw Error('커스텀 데이터 이상');
+      }
+      for(const c of next.care){
+        if(!c||typeof c.club!=='string'||c.club.length>85||typeof c.kind!=='string'||c.kind.length>30)throw Error('관리 데이터 이상');
+      }
+      if(!confirm('현재 기록을 이 백업 파일의 기록으로 교체할까요? 현재 기록은 백업하지 않으면 복구할 수 없습니다.'))return;
+      data={measurements:next.measurements,builds:next.builds,care:next.care};
+      stateSave();renderMeasurements();renderBuilds();renderCare();$('metrics').replaceChildren();
+      showStatus('shareStatus','백업 기록을 불러왔어요. 이 브라우저에만 저장됩니다.');
+    }catch{showStatus('shareStatus','유효하지 않은 HYRAM 백업 파일입니다. 데이터는 변경하지 않았어요.');}
+  });
   $('clearBtn').addEventListener('click',()=>{
     if(!confirm('이 브라우저에 저장된 모든 피팅·구성·관리 기록을 지울까요? 백업이 없으면 복구할 수 없습니다.'))return;
     data=defaultState();stateSave();renderMeasurements();renderBuilds();renderCare();$('metrics').replaceChildren();$('share').value='';showStatus('shareStatus','이 브라우저의 저장 기록을 초기화했습니다.');
