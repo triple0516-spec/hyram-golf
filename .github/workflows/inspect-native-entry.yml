@@ -35,3 +35,18 @@ jobs:
                               print(item[:180])
                       print('---')
           PY
+          echo "TARGETED ENTRY SOURCE"
+          python3 - <<'PY'
+          from pathlib import Path
+          base=Path('/tmp/hyram-source/hyram_rc9')
+          for name in ('lib/main.dart','lib/screens/main_shell.dart','lib/screens/home_screen.dart','lib/screens/more_screen.dart','pubspec.yaml'):
+              p=base/name
+              if not p.exists(): continue
+              print('BEGIN:',name)
+              for n,line in enumerate(p.read_text(errors='replace').splitlines()[:155],1):
+                  if any(x in line.lower() for x in ('api_key','secret','token=','password','clientid','access_key','authorization','consumer_key')):
+                      line='[REDACTED]'
+                  print(f'{n:03}: {line[:240]}')
+              print('END:',name)
+          PY
+
