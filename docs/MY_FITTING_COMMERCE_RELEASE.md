@@ -11,6 +11,7 @@
   - Records are saved **only in browser localStorage**. JSON export/import and delete exist; no authentication or cross-device backup.
 - `web/checkout.html`: POS card, bank transfer, and planned online PG displayed as **inquiry options**, not charge capture. Bank account and confirmed invoice are provided manually once a real quote exists.
 - `web/index.html`: landing links to the lifecycle and payment consultation.
+- `qa/install_my_fitting_native.py`: injects a separate Flutter MY FITTING screen and HomeScreen entry during the RC24 archive Android build. Native match/performance/custom/care records persist locally via shared_preferences; checkout opens external web inquiry. Website/browser records and Android records do not sync.
 
 ## Mandatory before publishing or enabling live payment
 
@@ -22,7 +23,7 @@
 6. Build real quote/inventory database, price consistency, shipping/tax disclosures, terms, privacy policy, customer consent and access controls before accepting orders or syncing identifiable user measurement records.
 7. Implement a real fitting backend for accounts, staff roles, per-session multi-shot data, device imports, timestamps, units, measurement context, consent, data portability/deletion, access logs and cross-device synchronization.
 8. If club manufacturer images are desired, obtain written use licenses, seller-accessible authorized media or own product photography. Keep original manufacturer logos and marks attributable to their owners; do not simulate manufacturer endorsements or a manufacturer-issued warranty.
-9. Android app is **not integrated** in this change: native source currently exists only as `HYRAM_GOLF_RC24_SOURCE.zip`; unpack, inspect and port screens with shared model/contracts before modifying app navigation. Play Store deployment requires rebuilt/signed and tested artifact; changing `web/` alone does not change the APK.
+9. Android source integration is **staged** by `qa/install_my_fitting_native.py` in the Android build workflow. Patch smoke test and Flutter analysis/integration must pass before marking native QA complete. It does not install or publish a new APK, and the app and website currently have separate local records. Play Store deployment requires rebuilt/signed and tested artifact; changing `web/` alone does not change the APK.
 
 ## Next release phases
 
