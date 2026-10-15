@@ -38,7 +38,10 @@ jobs:
       - name: Apply HYRAM light premium app theme and membership tiers
         working-directory: hyram_rc9
         run: python3 ../qa/apply_light_premium.py
-      - name: Add HYRAM consultation screen\n        working-directory: hyram_rc9\n        run: python3 ../qa/install_inquiry_screen.py\n      - name: Verify HYRAM visual contract
+      - name: Add HYRAM consultation screen
+        working-directory: hyram_rc9
+        run: python3 ../qa/install_inquiry_screen.py
+      - name: Verify HYRAM visual contract
         working-directory: hyram_rc9
         run: python3 ../qa/verify_light_premium.py
       - name: Reserve disk space for Android build and emulator
