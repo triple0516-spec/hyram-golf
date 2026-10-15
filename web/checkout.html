@@ -29,6 +29,8 @@
 </section></main><footer><div class="wrap">HYRAM GOLF · 하람골프 · 안전한 거래는 확인된 주문과 결제에서 시작됩니다.<br><a href="./">홈</a> · <a href="shop.html">쇼핑</a> · <a href="fitting.html">MY FITTING</a></div></footer>
 <script>
 const $=s=>document.getElementById(s);
+const brand=(new URLSearchParams(location.search)).get('brand');
+if(brand&&/^[A-Za-z0-9 _.-]{1,50}$/.test(brand)) $('orderForm').elements.item.value=brand+' 브랜드 제품 상담';
 $('prepare').addEventListener('click',()=>{
 const form=$('orderForm');if(!form.reportValidity())return;
 const d=Object.fromEntries(new FormData(form).entries());
