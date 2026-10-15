@@ -4,6 +4,7 @@ on:
     paths:
       - 'web/**'
       - 'qa/test_my_fitting_web.py'
+      - 'qa/install_my_fitting_native.py'
       - '.github/workflows/my-fitting-web-qa.yml'
   workflow_dispatch:
 permissions:
@@ -19,3 +20,18 @@ jobs:
           node --check web/fitting.js
       - name: Validate page wiring and storefront disclaimers
         run: python3 qa/test_my_fitting_web.py
+
+  native-patch-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate native patch generator syntax
+        run: python3 -m py_compile qa/install_my_fitting_native.py
+      - name: Extract archived app and apply fitting entrypoint
+        run: |
+          unzip -q HYRAM_GOLF_RC24_SOURCE.zip
+          cd hyram_rc9
+          python3 ../qa/install_my_fitting_native.py
+          grep -q "class HyramMyFittingScreen" lib/screens/hyram_my_fitting_screen.dart
+          grep -q "push(const HyramMyFittingScreen())" lib/screens/home_screen.dart
+          echo "PASS - Flutter fitting screen created and linked in home"
