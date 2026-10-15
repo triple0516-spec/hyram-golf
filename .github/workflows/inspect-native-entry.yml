@@ -1,0 +1,37 @@
+name: Inspect HYRAM Flutter entrypoints
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/inspect-native-entry.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect archived Flutter app safely
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/hyram-source
+          unzip -q HYRAM_GOLF_RC24_SOURCE.zip -d /tmp/hyram-source
+          echo "DART FILES (first 70)"
+          find /tmp/hyram-source -type f -name '*.dart' | sed 's@/tmp/hyram-source/@@' | sort | head -70
+          echo "APP NAVIGATION CLUES"
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('/tmp/hyram-source/hyram_rc9/lib')
+          for f in p.rglob('*.dart'):
+              lines=f.read_text(errors='replace').splitlines()
+              for i,line in enumerate(lines):
+                  low=line.lower()
+                  if any(term in low for term in ('materialapp(', 'class hyramapp', 'class homescreen','bottomnavigationbar','navigationbar(', 'navigationrail(', 'drawer(', 'ongetnerateroute', 'routes:', 'class hyramhome')):
+                      print('FILE:',f.relative_to(p),'LINE:',i+1)
+                      for item in lines[max(0,i-3):min(len(lines),i+11)]:
+                          if any(word in item.lower() for word in ('key=','secret','token','api_key','password','authorization')):
+                              print('[REDACTED]')
+                          else:
+                              print(item[:180])
+                      print('---')
+          PY
