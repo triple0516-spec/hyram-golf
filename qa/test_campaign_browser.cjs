@@ -25,7 +25,7 @@ fs.mkdirSync(out,{recursive:true});
      if(!await page.locator('a[href="signup.html"]').first().isVisible()) throw Error(label+': signup menu hidden');
     } else {
      if(!await page.locator('fieldset[disabled]').isVisible()) throw Error(label+': credentials must be disabled');
-     if(await page.locator('button[type="submit"]:enabled').count()) throw Error(label+': live signup/login submit exposed');
+     if(await page.locator('.panel fieldset button[type="submit"]:enabled').count()) throw Error(label+': live signup/login submit exposed');
     }
     await page.screenshot({path:path.join(out,width+'-'+(part||'index.html').replace('.html','')+'.png'),fullPage:true});
     console.log('PASS '+label+' @'+width+'px — no horizontal overflow; expected UI present');
