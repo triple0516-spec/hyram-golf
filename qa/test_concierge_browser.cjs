@@ -20,6 +20,21 @@ for(const width of [375,390,1280]){
     const panel=page.locator('#hc-widget');
     if(!await launch.isVisible())throw Error(label+': missing chat launcher @'+width);
     if(await panel.isVisible())throw Error(label+': chat unexpectedly open');
+    if(file==='shop.html'){
+      await page.locator('#search').fill('GT2');
+      const count=(await page.locator('#count').textContent()||'');
+      if(!count.includes('1개'))throw Error('Shop model search failed @'+width+': '+count);
+      await page.locator('#search').fill('');
+      await page.locator('button[data-filter="중고"]').click();
+      const used=(await page.locator('#count').textContent()||'');
+      if(!used.includes('2개'))throw Error('Shop used filter failed @'+width+': '+used);
+      await page.locator('button[data-filter="전체"]').click();
+      await page.locator('[data-hyram-chat-product]').first().click();
+      if(!await panel.isVisible())throw Error('Shop product consultation did not open chat @'+width);
+      const draft=await page.locator('#hc-input').inputValue();
+      if(!draft.includes('가격, 재고와 샤프트'))throw Error('Shop product was not prefilled @'+width);
+      await page.keyboard.press('Escape');
+    }
     await launch.click();
     if(!await panel.isVisible())throw Error(label+': opening chat failed');
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);
