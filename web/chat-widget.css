@@ -1,0 +1,35 @@
+
+/* HYRAM CONCIERGE: premium floating guidance UI inspired by the approved visual mockup. */
+#hyram-concierge-root{font-family:Arial,"Noto Sans KR",sans-serif;color:#26313b;font-size:14px;line-height:1.55}
+#hyram-concierge-root *{box-sizing:border-box}
+.hc-launcher{position:fixed;right:22px;bottom:23px;z-index:86;display:flex;align-items:center;gap:9px;min-height:54px;padding:10px 18px;background:linear-gradient(115deg,#161f30,#303753);color:#fff;border:1px solid #c4ad70;border-radius:999px;box-shadow:0 9px 30px #0b160f50;font-size:14px;font-weight:800;cursor:pointer}
+.hc-launcher .hc-spark{display:grid;place-items:center;width:30px;height:30px;background:#f2e6bb;color:#34324b;border-radius:50%;font-size:17px}
+.hc-widget{position:fixed;right:22px;bottom:89px;z-index:87;width:min(384px,calc(100vw - 24px));height:min(560px,calc(100dvh - 118px));display:flex;flex-direction:column;background:#fff;color:#29313b;border:1px solid #e0e3ef;border-radius:25px;box-shadow:0 22px 72px #0e132c55;overflow:hidden}
+.hc-widget[hidden],.hc-launcher[hidden]{display:none!important}
+.hc-top{display:flex;gap:11px;align-items:center;padding:17px 16px 15px;background:linear-gradient(155deg,#fff,#f4f4ff);border-bottom:1px solid #eaebf3}
+.hc-avatar{width:46px;height:46px;display:grid;place-items:center;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,#eff0ff,#d7d7fb);border:1px solid #dadbf5;color:#5b51aa}
+.hc-avatar svg{display:block;width:31px;height:31px}
+.hc-heading{min-width:0;flex:1}
+.hc-heading strong{font-size:16px;color:#1b2534;display:block}
+.hc-heading .hc-mode{display:inline-block;border-radius:8px;background:#e8e5ff;color:#5b4dac;padding:1px 6px;font-size:10px;vertical-align:2px}
+.hc-heading small{display:flex;align-items:center;gap:5px;font-size:11px;color:#6f7684;font-weight:500;margin-top:4px}
+.hc-dot{width:7px;height:7px;display:inline-block;background:#34b972;border-radius:50%}
+.hc-close{width:32px;height:32px;display:grid;place-items:center;flex-shrink:0;border:0;background:transparent;color:#303777;font-size:27px;cursor:pointer;border-radius:8px}
+.hc-chat-scroll{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:16px 14px 12px;background:#fff}
+.hc-message{max-width:93%;padding:12px 14px;border-radius:15px;line-height:1.65;margin:0 0 13px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
+.hc-message.hc-bot{background:#f2f3f8;color:#353e4c;border-top-left-radius:5px}
+.hc-message.hc-user{background:#282d52;color:#fff;margin-left:auto;border-bottom-right-radius:5px}
+.hc-message a{color:#283ca0;font-weight:800;text-decoration:underline}
+.hc-quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:3px 0 10px}
+.hc-quick button{border:1px solid #d2d5e2;background:#fff;color:#474858;border-radius:999px;padding:9px 3px;min-height:38px;font-size:11px;font-weight:700;cursor:pointer;white-space:normal;line-height:1.25}
+.hc-quick button:hover{background:#f3f2fb;border-color:#958bd5}
+.hc-info{font-size:11px;color:#777f8a;line-height:1.5;margin:6px 1px 0}
+.hc-composer{display:flex;gap:8px;align-items:center;padding:12px 13px;background:#f8f8fc;border-top:1px solid #e5e7ee}
+.hc-composer input{min-width:0;flex:1;min-height:43px;border:1px solid #d1d4e1;background:#fff;border-radius:24px;padding:11px 13px;font-size:13px;font-family:inherit;color:#202a34}
+.hc-send{width:43px;height:43px;flex-shrink:0;border:0;border-radius:50%;background:#4c4eaa;color:#fff;font-size:21px;font-weight:bold;cursor:pointer}
+.hc-send:disabled{opacity:.45;cursor:wait}
+.hc-footer{padding:0 14px 11px;background:#f8f8fc;color:#787e90;font-size:10px;text-align:center}
+#hyram-concierge-root :is(button,input,a):focus-visible{outline:3px solid #b8a268;outline-offset:3px}
+@media(max-width:780px){.hc-launcher{bottom:88px;right:14px}.hc-widget{right:12px;bottom:84px;width:calc(100vw - 24px);height:min(630px,calc(100dvh - 119px))}}
+@media(max-width:410px){.hc-launcher{bottom:88px;right:12px}.hc-widget{right:6px;bottom:76px;width:calc(100vw - 12px);height:min(620px,calc(100dvh - 100px));border-radius:18px}.hc-top{padding:13px 12px}.hc-chat-scroll{padding:12px}.hc-quick{gap:5px}.hc-quick button{padding:8px 1px;font-size:10px}}
+@media(prefers-reduced-motion:no-preference){.hc-widget{animation:hc-slide-in .18s ease-out}@keyframes hc-slide-in{from{transform:translateY(8px);opacity:.4}to{transform:translateY(0);opacity:1}}}
