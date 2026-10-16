@@ -67,6 +67,14 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidd
 document.querySelectorAll('[data-hyram-chat-open]').forEach(function(el){
  el.addEventListener('click',function(e){e.preventDefault();toggle(true)});
 });
+document.querySelectorAll('[data-hyram-chat-product]').forEach(function(el){
+ el.addEventListener('click',function(e){
+  e.preventDefault();
+  toggle(true);
+  input.value=el.getAttribute('data-hyram-chat-product')+' 제품의 가격, 재고와 샤프트 구성 상담을 받고 싶어요.';
+  input.focus();
+ });
+});
 root.querySelectorAll('[data-topic]').forEach(function(el){el.addEventListener('click',function(){quick(el.getAttribute('data-topic'))})});
 form.addEventListener('submit',async function(e){
  e.preventDefault();if(send.disabled)return;
