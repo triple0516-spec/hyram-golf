@@ -35,6 +35,10 @@ jobs:
           cd hyram_rc9
           patch --batch --forward -p1 < ../qa/rc24-ui-fixes.patch
           mkdir -p ../evidence
+      - name: Inspect RC24 palette declarations
+        working-directory: hyram_rc9
+        run: |
+          sed -n '1,150p' lib/theme/app_theme.dart
       - name: Apply HYRAM light premium app theme and membership tiers
         working-directory: hyram_rc9
         run: python3 ../qa/apply_light_premium.py
