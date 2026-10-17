@@ -50,6 +50,11 @@ body{background:var(--bg);color:var(--text);font-family:Arial,"Noto Sans KR",san
 .premium-master-lead{color:#173d2d;font-weight:800;font-size:16px!important}
 .premium-master-intro>p:not(.premium-master-lead){font-size:14px;line-height:1.95;color:#596d5e;max-width:550px}
 .premium-text-link{display:inline-flex;margin-top:11px;padding-bottom:6px;border-bottom:1px solid #aa8c4c;color:#214331;font-size:14px;font-weight:800}
+.premium-team-member{margin:23px 0 16px;padding:20px 22px;border:1px solid #d8e0d3;border-left:4px solid #b3914a;border-radius:10px;background:#f5f7f1}
+.premium-team-kicker{font-weight:800;font-size:11px;letter-spacing:.12em;color:#a07c35}
+.premium-team-member h3{font-size:20px;color:#1c4834;margin:10px 0 7px;line-height:1.4}
+.premium-team-member h3 small{font-size:13px;color:#627a65;font-weight:700}
+.premium-team-member p{font-size:13px;color:#5b715f;line-height:1.75;margin:0}
 .premium-master-process{padding:27px 29px;border:1px solid #dce3d8;border-radius:19px;background:linear-gradient(145deg,#f4f6ef,#fcfbf6);box-shadow:0 8px 34px #14372608}
 .premium-master-process ol{padding:0;margin:0;list-style:none}
 .premium-master-process li{display:grid;grid-template-columns:37px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid #dbe2d6}
