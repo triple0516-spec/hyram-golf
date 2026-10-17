@@ -97,3 +97,6 @@ body .mobile-quick a:last-child{background:#173c2c;color:#fff}
   }
   body .hc-launcher .hc-spark{width:34px;height:34px;font-size:19px;flex-shrink:0}
 }
+
+/* Keep the consultant signature and service descriptor readable on narrow phones. */
+@media(max-width:420px){.premium-hero-foot{display:flex;flex-direction:column;gap:2px}}
