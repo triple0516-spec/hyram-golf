@@ -16,21 +16,27 @@ if theme_file is None:
 
 text = theme_file.read_text()
 palette = {
-    "bg": "0xFFF7F5EE",
+    "black": "0xFFF7F5EE",
     "panel": "0xFFFFFDF8",
+    "panel2": "0xFFF0EFE7",
     "gold": "0xFFA88436",
-    "text": "0xFF183126",
+    "champagne": "0xFF85692B",
+    "ivory": "0xFF183126",
     "muted": "0xFF66756D",
 }
 changed = 0
 for name, value in palette.items():
-    pattern = rf"(static\s+const\s+Color\s+{name}\s*=\s*(?:const\s+)?Color\()0x[0-9A-Fa-f]+(\)\s*;)"
+    pattern = rf"(static\s+const\s+(?:Color\s+)?{name}\s*=\s*(?:const\s+)?Color\()0x[0-9A-Fa-f]+(\)\s*;)"
     updated, count = re.subn(pattern, rf"\g<1>{value}\g<2>", text)
     if count:
         text = updated
         changed += count
-if changed == 0:
-    raise SystemExit(f"BLOCKED - {theme_file} palette shape is unknown; refusing unsafe theme rewrite")
+if changed != len(palette):
+    raise SystemExit(f"BLOCKED - {theme_file}: only {changed}/{len(palette)} palette declarations matched")
+if text.count("ThemeData.dark(useMaterial3: true)") != 1 or text.count("ColorScheme.dark(") != 1:
+    raise SystemExit("BLOCKED - unexpected dark theme construction")
+text = text.replace("ThemeData.dark(useMaterial3: true)", "ThemeData.light(useMaterial3: true)")
+text = text.replace("ColorScheme.dark(", "ColorScheme.light(")
 theme_file.write_text(text)
 
 membership_hits = 0
