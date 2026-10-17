@@ -64,6 +64,30 @@ jobs:
         run: |
           node qa/test_campaign_browser.cjs
           node qa/test_concierge_browser.cjs
+      - name: Verify professional hero imagery and mobile links
+        run: |
+          node <<'JS'
+          const {chromium} = require('playwright');
+          const assert = require('node:assert/strict');
+          (async () => {
+            const browser = await chromium.launch({headless:true});
+            try {
+              for (const width of [375, 390, 1280]) {
+                const page = await browser.newPage({viewport:{width,height:844}});
+                await page.goto('http://127.0.0.1:8765/index.html', {waitUntil:'networkidle'});
+                assert.equal(await page.locator('#premium-hero-title').count(), 1);
+                assert.equal(await page.locator('#master-fitter').count(), 1);
+                assert.equal(await page.locator('.premium-header a[href="signup.html"]').count(), 1);
+                assert.equal(await page.locator('.premium-hero-actions a[href="#consult"]').count(), 1);
+                assert.equal(await page.locator('.brand-mark').evaluate(img => img.complete && img.naturalWidth > 0), true, 'Brand icon failed to load');
+                assert.equal(await page.locator('.premium-visual img').evaluate(img => img.complete && img.naturalWidth > 0), true, 'Campaign image failed to load');
+                assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), true, 'Horizontal overflow');
+                await page.close();
+                console.log('PASS premium mobile hero at', width);
+              }
+            } finally { await browser.close(); }
+          })().catch(e => {console.error(e);process.exit(1)});
+          JS
       - name: Upload campaign screenshots
         if: always()
         uses: actions/upload-artifact@v4
