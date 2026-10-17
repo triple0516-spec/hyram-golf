@@ -87,3 +87,13 @@ body .mobile-quick a:last-child{background:#173c2c;color:#fff}
 @media(max-width:780px){.premium-header .nav{min-height:68px}.premium-header .links,.premium-header .talk{display:none}.premium-header .brand-mark{width:40px;height:40px}.premium-hero-layout{padding-top:31px}.premium-hero .premium-hero-copy h1{font-size:clamp(32px,8.7vw,49px)}.premium-hero-foot{font-size:9px}.premium-master{padding:55px 0}.premium-master h2{font-size:32px}.mobile-quick{grid-template-columns:1fr 1fr}.premium-header .hyram-account-links a{min-height:38px}.hc-launcher{right:14px}}
 @media(max-width:420px){.premium-header .nav{gap:7px}.premium-header .brand{gap:7px}.premium-header .brand-lockup strong{font-size:12px}.premium-header .brand-lockup small{font-size:7px;letter-spacing:.17em}.premium-header .brand-mark{width:36px;height:36px}.premium-header .hyram-account-links{gap:4px}.premium-header .hyram-account-links a{font-size:10px;padding:7px 7px;min-height:35px}.premium-hero-layout{padding-top:27px}.premium-eyebrow{font-size:9px!important;letter-spacing:.12em;gap:8px;margin-bottom:17px!important}.premium-line{width:23px}.premium-hero .premium-hero-copy h1{font-size:clamp(30px,8.1vw,36px);line-height:1.19;letter-spacing:-.07em}.premium-hero-lead{font-size:18px!important}.premium-hero-desc{font-size:13px!important}.premium-hero-actions{display:grid;grid-template-columns:1fr;gap:9px;margin:19px 0 23px}.premium-hero-proof strong{font-size:11px}.premium-hero-proof span{font-size:10px}.premium-hero-proof div{padding:0 9px}.premium-hero-foot{display:block;line-height:1.9}.premium-visual-top{font-size:9px;padding:12px 14px}.premium-visual figcaption{padding:12px 14px;font-size:10px}.premium-visual figcaption small{font-size:8px}.premium-master-process{padding:20px}.premium-master h2{font-size:28px}.premium-master{padding:45px 0}}
 @media(prefers-reduced-motion:reduce){.premium-button{transition:none}.premium-button:hover{transform:none}}
+
+/* Mobile assistant is deliberately compact so it does not cover product cards. */
+@media(max-width:780px){
+  body .hc-launcher{
+    width:54px;height:54px;min-height:54px;padding:7px;gap:0;
+    right:13px;bottom:88px;justify-content:center;
+    font-size:0;border-radius:50%;box-shadow:0 8px 23px #13291c33;
+  }
+  body .hc-launcher .hc-spark{width:34px;height:34px;font-size:19px;flex-shrink:0}
+}
