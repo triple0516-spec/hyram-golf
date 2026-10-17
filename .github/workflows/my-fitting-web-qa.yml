@@ -7,6 +7,7 @@ on:
       - 'qa/test_campaign_auth_web.py'
       - 'qa/test_campaign_browser.cjs'
       - 'qa/test_concierge_browser.cjs'
+      - 'qa/test_mobile_consultation_browser.cjs'
       - 'qa/test_concierge_web.py'
       - 'qa/install_my_fitting_native.py'
       - '.github/workflows/my-fitting-web-qa.yml'
@@ -64,6 +65,7 @@ jobs:
         run: |
           node qa/test_campaign_browser.cjs
           node qa/test_concierge_browser.cjs
+          node qa/test_mobile_consultation_browser.cjs
       - name: Verify professional hero imagery and mobile links
         run: |
           node <<'JS'
