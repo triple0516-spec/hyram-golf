@@ -39,7 +39,7 @@ class _HyramServiceInquiryState extends State<HyramServiceInquiry> {
         const Text('현재 자동 예약·결제·접수 서버는 연결되지 않았습니다. 상담 내용을 확인한 후 카카오톡에서 최종 접수해 주세요.'),
         const SizedBox(height: 20),
         DropdownButtonFormField<String>(
-          value: service,
+          initialValue: service,
           isExpanded: true,
           decoration: const InputDecoration(labelText: '서비스'),
           items: services.map((s) => DropdownMenuItem(value: s, child: Text(s, overflow: TextOverflow.ellipsis))).toList(),
