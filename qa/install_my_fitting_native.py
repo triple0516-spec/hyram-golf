@@ -1,7 +1,9 @@
 """Generate a native Flutter MY FITTING screen and safely link it from verified RC24 HomeScreen."""
 from pathlib import Path
 p=Path("lib/screens/hyram_my_fitting_screen.dart")
-p.write_text(r'''import 'dart:convert';
+p.write_text(r'''// Generated MY FITTING display strings intentionally concatenate optional values.
+// ignore_for_file: prefer_interpolation_to_compose_strings
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
