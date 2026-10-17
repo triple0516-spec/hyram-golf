@@ -1,0 +1,23 @@
+
+/* HYRAM lifecycle campaigns: no third-party images or unverified offers. */
+.hyram-campaign{background:#0b1410;color:#f6f4ec;padding:42px 0 52px;border-block:1px solid #304338}
+.hyram-campaign .hc-wrap{max-width:1160px;margin:auto;padding:0 22px}
+.hyram-campaign .hc-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}
+.hyram-campaign .hc-kicker{font-size:11px;letter-spacing:.2em;color:#d6c28f;font-weight:700}
+.hyram-campaign h2{font-size:clamp(24px,3.5vw,38px);line-height:1.25;margin:7px 0 5px;color:#f6f4ec}
+.hyram-campaign .hc-sub{font-size:13px;color:#c7d0c6;margin:0;line-height:1.6}
+.hyram-campaign .hc-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:13px}
+.hyram-campaign .hc-card{position:relative;display:flex;flex-direction:column;overflow:hidden;min-height:245px;border:1px solid #597261;border-radius:18px;padding:25px;background:linear-gradient(140deg,#1f4b39,#10241b);isolation:isolate}
+.hyram-campaign .hc-card:nth-child(2){background:linear-gradient(145deg,#3d3525,#1d291f)}
+.hyram-campaign .hc-card:nth-child(3){background:linear-gradient(145deg,#273b42,#172b2c)}
+.hyram-campaign .hc-card::after{content:"";position:absolute;width:200px;height:200px;border:1px solid #ffffff29;border-radius:50%;right:-70px;top:-55px;box-shadow:0 0 0 36px #ffffff0a,0 0 0 75px #ffffff07;z-index:-1}
+.hyram-campaign .hc-number{letter-spacing:.16em;font-size:11px;font-weight:700;color:#e4d29e}
+.hyram-campaign h3{font-size:clamp(20px,2.2vw,28px);margin:20px 0 9px;line-height:1.27;color:#fff}
+.hyram-campaign .hc-card p{font-size:13px;color:#e1e9dc;line-height:1.75;margin:0 0 22px}
+.hyram-campaign .hc-cta{display:inline-flex;align-items:center;align-self:start;margin-top:auto;min-height:44px;padding:11px 16px;border-radius:9px;background:#f6f0de;color:#192f23;text-decoration:none;font-size:13px;font-weight:800}
+.hyram-campaign .hc-cta:focus-visible,.hyram-account-links a:focus-visible{outline:3px solid #e7c986;outline-offset:3px}
+.hyram-account-links{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.hyram-account-links a{white-space:nowrap;font-size:12px;padding:8px 10px;border-radius:9px;border:1px solid #728474;color:inherit;text-decoration:none;min-height:38px;display:inline-flex;align-items:center}
+.hyram-account-links a:last-child{background:#e9dfc6;color:#20372a;border-color:#e9dfc6;font-weight:800}
+@media(max-width:820px){.hyram-campaign .hc-grid{grid-template-columns:1fr 1fr}.hyram-campaign .hc-card:first-child{grid-column:1/-1;min-height:205px}.hyram-campaign .hc-card{min-height:220px}}
+@media(max-width:560px){.hyram-campaign{padding:28px 0 34px}.hyram-campaign .hc-grid{grid-template-columns:1fr}.hyram-campaign .hc-card:first-child{grid-column:auto}.hyram-campaign .hc-card{min-height:190px;padding:21px}.hyram-campaign h3{margin:13px 0 8px}.hyram-campaign .hc-heading{display:block}.hyram-account-links{gap:5px}.hyram-account-links a{padding:8px 7px;font-size:11px;min-height:36px}}
