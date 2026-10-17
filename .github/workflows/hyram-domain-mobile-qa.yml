@@ -1,0 +1,72 @@
+name: HYRAM Domain and Mobile QA
+on:
+  push:
+    branches: [main, fix/mobile-shop-consultation-20261009]
+    paths:
+      - web/**
+      - qa/mobile_site_smoke.py
+      - .github/workflows/hyram-domain-mobile-qa.yml
+  pull_request:
+    paths:
+      - web/**
+      - qa/mobile_site_smoke.py
+      - .github/workflows/hyram-domain-mobile-qa.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  domain-diagnostics:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Resolve public domain and request actual pages
+        shell: bash
+        run: |
+          set -uo pipefail
+          for hostname in www.hyramgolf.kr hyramgolf.kr triple0516-spec.github.io; do
+            echo "=== DNS $hostname ==="
+            (getent ahostsv4 "$hostname" || true) | head -8
+          done
+          code=0
+          for url in https://www.hyramgolf.kr/ https://www.hyramgolf.kr/shop.html https://hyramgolf.kr/ https://triple0516-spec.github.io/hyram-golf/; do
+            echo "=== GET $url ==="
+            file="$(mktemp)"
+            if status=$(curl --location --silent --show-error --max-time 20 --output "$file" --write-out '%{http_code} %{url_effective} %{ssl_verify_result}' "$url"); then
+              echo "response: $status"
+              if [[ "$url" == https://www.hyramgolf.kr/* ]] && ! grep -qi 'HYRAM GOLF' "$file"; then
+                echo "::error::Official domain did not return HYRAM GOLF HTML"
+                code=1
+              fi
+              if [[ "$url" == https://www.hyramgolf.kr/* ]] && [[ "${status%% *}" != "200" ]]; then
+                echo "::error::Official domain HTTP status is not 200"
+                code=1
+              fi
+            else
+              echo "::error::Could not connect to $url"
+              [[ "$url" == https://www.hyramgolf.kr/* ]] && code=1
+            fi
+            rm -f "$file"
+          done
+          exit "$code"
+  mobile-chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Playwright and Chromium
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Browser mobile smoke
+        run: python qa/mobile_site_smoke.py
+      - name: Preserve viewport screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hyram-mobile-qa-screenshots
+          path: evidence/mobile/
+          if-no-files-found: warn
