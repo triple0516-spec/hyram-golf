@@ -45,6 +45,12 @@ jobs:
       - name: Add HYRAM consultation screen
         working-directory: hyram_rc9
         run: python3 ../qa/install_inquiry_screen.py
+      - name: Add native MY FITTING screen and link to Home
+        working-directory: hyram_rc9
+        run: |
+          python3 ../qa/install_my_fitting_native.py
+          test -s lib/screens/hyram_my_fitting_screen.dart
+          grep -q 'push(const HyramMyFittingScreen())' lib/screens/home_screen.dart
       - name: Verify HYRAM visual contract
         working-directory: hyram_rc9
         run: python3 ../qa/verify_light_premium.py
