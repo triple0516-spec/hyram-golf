@@ -81,7 +81,7 @@ class _FittingState extends State<HyramMyFittingScreen>{
     final b=performance.where((m)=>m['phase']!='구매 전').toList();
     if(a.isEmpty||b.isEmpty)return '비교 기록 부족';
     final n=(b.last[metric] as num).toDouble()-(a.last[metric] as num).toDouble();
-    return (n>=0?'+':'')+n.toStringAsFixed(1)+' '+unit;
+    return "${n>=0?'+':''}${n.toStringAsFixed(1)} $unit";
   }
   Widget performanceTab()=>ListView(padding:const EdgeInsets.all(16),children:[
     heading('HYRAM PERFORMANCE','측정 장비에서 직접 확인한 발사각·백스핀·방향·캐리 데이터를 입력해요.'),
@@ -90,10 +90,10 @@ class _FittingState extends State<HyramMyFittingScreen>{
     input(1,'발사각 (°)',number:true),input(2,'백스핀 (rpm)',number:true),
     input(3,'출발 방향 (우측 +, °)',number:true),input(4,'캐리 (m)',number:true),
     FilledButton(onPressed:addMeasurement,child:const Text('이 기기에 기록 저장')),
-    const SizedBox(height:17),item('최근 구매 전후 변화','발사각 '+delta('launch','°')+'\n백스핀 '+delta('spin','rpm')+'\n방향 '+delta('direction','°')+'\n캐리 '+delta('carry','m')),
+    const SizedBox(height:17),item('최근 구매 전후 변화',"발사각 ${delta('launch','°')}\n백스핀 ${delta('spin','rpm')}\n방향 ${delta('direction','°')}\n캐리 ${delta('carry','m')}"),
     const Text('동일한 측정 장비와 조건에서 비교해야 하며 수치 변화만으로 실력 향상을 단정하지 않습니다.',style:TextStyle(fontSize:11)),
-    ...performance.reversed.take(12).map((m)=>item((m['date']??'').toString()+' · '+(m['phase']??'').toString()+' · '+(m['club']??'').toString(),
-      '발사각 '+(m['launch']??'').toString()+'° / 스핀 '+(m['spin']??'').toString()+'rpm / 방향 '+(m['direction']??'').toString()+'° / 캐리 '+(m['carry']??'').toString()+'m')),
+    ...performance.reversed.take(12).map((m)=>item("${m['date']??''} · ${m['phase']??''} · ${m['club']??''}",
+      "발사각 ${m['launch']??''}° / 스핀 ${m['spin']??''}rpm / 방향 ${m['direction']??''}° / 캐리 ${m['carry']??''}m")),
   ]);
   void addCustom(){
     if(fields[5].text.trim().isEmpty||fields[6].text.trim().isEmpty){info('헤드와 샤프트를 입력해 주세요.');return;}
@@ -102,19 +102,19 @@ class _FittingState extends State<HyramMyFittingScreen>{
     for(int n=5;n<=10;n++){fields[n].clear();}
     save();
   }
-  String buildText()=>custom.reversed.take(2).map((b)=>(b['brand']??'').toString()+' '+(b['head']??'').toString()+
-     ' / 샤프트 '+(b['shaft']??'').toString()+' '+(b['flex']??'').toString()+
-     ' / 로프트 '+(b['loft']??'').toString()+' / 라이 '+(b['lie']??'').toString()+
-     ' / 그립 '+(b['grip']??'').toString()).join('\n');
+  String buildText()=>custom.reversed.take(2).map((b)=>"${b['brand']??''} ${b['head']??''}"
+     " / 샤프트 ${b['shaft']??''} ${b['flex']??''}"
+     " / 로프트 ${b['loft']??''} / 라이 ${b['lie']??''}"
+     " / 그립 ${b['grip']??''}").join('\n');
   Widget customTab()=>ListView(padding:const EdgeInsets.all(16),children:[
     heading('HYRAM CUSTOM LAB','헤드·샤프트·로프트·라이각·그립을 구성해 제작 가능 여부와 견적을 상담해요.'),
     dropdown(brand,brands,(v)=>setState(()=>brand=v??brand),'브랜드'),
     const SizedBox(height:12),input(5,'헤드 / 모델'),input(6,'샤프트'),input(7,'Flex'),
     input(8,'로프트 (°)',number:true),input(9,'라이각 (°)',number:true),input(10,'그립'),
     FilledButton(onPressed:addCustom,child:const Text('구성 후보 저장')),
-    const SizedBox(height:13),...custom.reversed.take(12).map((b)=>item((b['brand']??'').toString()+' '+(b['head']??'').toString(),
-      (b['shaft']??'').toString()+' / '+(b['flex']??'').toString()+' / 로프트 '+(b['loft']??'').toString()+' / 라이 '+(b['lie']??'').toString()+' / 그립 '+(b['grip']??'').toString())),
-    OutlinedButton(onPressed:()=>copy('[HYRAM CUSTOM LAB 견적 문의]\n'+buildText()+'\n실제 제작 가능 여부 및 금액 확인 부탁드립니다.'),child:const Text('최근 구성 최대 2개 견적 문의 복사')),
+    const SizedBox(height:13),...custom.reversed.take(12).map((b)=>item("${b['brand']??''} ${b['head']??''}",
+      "${b['shaft']??''} / ${b['flex']??''} / 로프트 ${b['loft']??''} / 라이 ${b['lie']??''} / 그립 ${b['grip']??''}")),
+    OutlinedButton(onPressed:()=>copy("[HYRAM CUSTOM LAB 견적 문의]\n${buildText()}\n실제 제작 가능 여부 및 금액 확인 부탁드립니다."),child:const Text('최근 구성 최대 2개 견적 문의 복사')),
   ]);
   void addCare(){
     if(fields[11].text.trim().isEmpty){info('클럽 모델을 입력해 주세요.');return;}
@@ -129,9 +129,9 @@ class _FittingState extends State<HyramMyFittingScreen>{
     const SizedBox(height:12),input(11,'브랜드 · 모델'),input(12,'희망일 YYYY-MM-DD'),
     input(13,'상태 · 요청 메모',lines:2),
     FilledButton(onPressed:addCare,child:const Text('관리 기록 저장')),
-    const SizedBox(height:12),...maintenance.reversed.take(12).map((m)=>item((m['kind']??'').toString()+' · '+(m['club']??'').toString(),
-       '희망일: '+(m['when']??'').toString()+' / '+(m['memo']??'').toString())),
-    OutlinedButton(onPressed:()=>copy('[HYRAM TRADE & CARE 상담]\n'+maintenance.reversed.take(3).map((m)=>m.toString()).join('\n')),
+    const SizedBox(height:12),...maintenance.reversed.take(12).map((m)=>item("${m['kind']??''} · ${m['club']??''}",
+       "희망일: ${m['when']??''} / ${m['memo']??''}")),
+    OutlinedButton(onPressed:()=>copy("[HYRAM TRADE & CARE 상담]\n${maintenance.reversed.take(3).map((m)=>m.toString()).join('\n')}"),
       child:const Text('관리 기록 상담 내용 복사')),
   ]);
   Future<void> copy(String content) async {await Clipboard.setData(ClipboardData(text:content));info('복사했어요. 상담방에서 붙여넣어 주세요.');}
