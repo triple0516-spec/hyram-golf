@@ -36,9 +36,16 @@
     disable("토스 테스트 결제 서버가 아직 설정되지 않았습니다. 현재는 상담만 가능합니다.");
     return;
   }
-  if (typeof window.TossPayments !== "function") {
-    disable("결제 모듈을 불러오지 못했습니다. 네트워크 연결 후 다시 열어 주세요.");
-    return;
+  async function loadSdk() {
+    if (typeof window.TossPayments === "function") return;
+    await new Promise((resolve, reject) => {
+      const sdk = document.createElement("script");
+      sdk.src = "https://js.tosspayments.com/v2/standard";
+      sdk.onload = resolve;
+      sdk.onerror = () => reject(Error("Payment SDK unavailable"));
+      document.head.appendChild(sdk);
+    });
+    if (typeof window.TossPayments !== "function") throw Error("Payment SDK not initialized");
   }
   async function showQuote() {
     const response = await fetch(api.origin + "/payment/quote?token=" + encodeURIComponent(token),
@@ -65,6 +72,7 @@
         : "결제 준비가 완료되지 않았습니다. 상담 채널로 문의해 주세요.");
       return;
     }
+    await loadSdk();
     const payments = window.TossPayments(quote.clientKey);
     const widgets = payments.widgets({ customerKey: window.TossPayments.ANONYMOUS || "ANONYMOUS" });
     await widgets.setAmount({ currency: "KRW", value: quote.amount });
