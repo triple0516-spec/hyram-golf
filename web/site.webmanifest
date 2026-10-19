@@ -1,0 +1,18 @@
+{
+  "name": "HYRAM GOLF · 하람골프",
+  "short_name": "HYRAM GOLF",
+  "description": "클럽·피팅·레슨·중고 상담",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#f9f8f2",
+  "theme_color": "#173e2e",
+  "icons": [
+    {
+      "src": "icons/hyram-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

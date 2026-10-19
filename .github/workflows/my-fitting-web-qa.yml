@@ -1,0 +1,99 @@
+name: MY FITTING web static checks
+on:
+  pull_request:
+    paths:
+      - 'web/**'
+      - 'qa/test_my_fitting_web.py'
+      - 'qa/test_campaign_auth_web.py'
+      - 'qa/test_campaign_browser.cjs'
+      - 'qa/test_concierge_browser.cjs'
+      - 'qa/test_mobile_consultation_browser.cjs'
+      - 'qa/test_concierge_web.py'
+      - 'qa/install_my_fitting_native.py'
+      - '.github/workflows/my-fitting-web-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: |
+          node --check web/brand-data.js
+          node --check web/fitting.js
+          node --check web/chat-widget.js
+      - name: Validate page wiring and storefront disclaimers
+        run: python3 qa/test_my_fitting_web.py
+      - name: Validate campaign, account preview and local navigation
+        run: python3 qa/test_campaign_auth_web.py
+      - name: Validate concierge page integration and safe fallback
+        run: python3 qa/test_concierge_web.py
+
+  native-patch-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate native patch generator syntax
+        run: python3 -m py_compile qa/install_my_fitting_native.py
+      - name: Extract archived app and apply fitting entrypoint
+        run: |
+          unzip -q HYRAM_GOLF_RC24_SOURCE.zip
+          cd hyram_rc9
+          python3 ../qa/install_my_fitting_native.py
+          grep -q "class HyramMyFittingScreen" lib/screens/hyram_my_fitting_screen.dart
+          grep -q "push(const HyramMyFittingScreen())" lib/screens/home_screen.dart
+          echo "PASS - Flutter fitting screen created and linked in home"
+
+  responsive-browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install headless Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Launch local static web server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory web >/tmp/hyram-http.log 2>&1 &
+          curl -f --retry 15 --retry-connrefused --retry-delay 1 http://127.0.0.1:8765/
+      - name: Test 375px 390px and desktop with screenshots
+        run: |
+          node qa/test_campaign_browser.cjs
+          node qa/test_concierge_browser.cjs
+          node qa/test_mobile_consultation_browser.cjs
+      - name: Verify professional hero imagery and mobile links
+        run: |
+          node <<'JS'
+          const {chromium} = require('playwright');
+          const assert = require('node:assert/strict');
+          (async () => {
+            const browser = await chromium.launch({headless:true});
+            try {
+              for (const width of [375, 390, 1280]) {
+                const page = await browser.newPage({viewport:{width,height:844}});
+                await page.goto('http://127.0.0.1:8765/index.html', {waitUntil:'networkidle'});
+                assert.equal(await page.locator('#premium-hero-title').count(), 1);
+                assert.equal(await page.locator('#master-fitter').count(), 1);
+                assert.equal(await page.locator('.premium-header a[href="signup.html"]').count(), 1);
+                assert.equal(await page.locator('.premium-hero-actions a[href="#consult"]').count(), 1);
+                assert.equal(await page.locator('.brand-mark').evaluate(img => img.complete && img.naturalWidth > 0), true, 'Brand icon failed to load');
+                assert.equal(await page.locator('.premium-visual img').evaluate(img => img.complete && img.naturalWidth > 0), true, 'Campaign image failed to load');
+                assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), true, 'Horizontal overflow');
+                await page.close();
+                console.log('PASS premium mobile hero at', width);
+              }
+            } finally { await browser.close(); }
+          })().catch(e => {console.error(e);process.exit(1)});
+          JS
+      - name: Upload campaign screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hyram-campaign-account-screenshots
+          path: qa/screenshots/campaign-account/
+          if-no-files-found: ignore
