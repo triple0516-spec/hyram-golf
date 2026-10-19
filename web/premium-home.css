@@ -111,3 +111,38 @@ body .mobile-quick a:last-child{background:#173c2c;color:#fff}
 
 /* Keep the consultant signature and service descriptor readable on narrow phones. */
 @media(max-width:420px){.premium-hero-foot{display:flex;flex-direction:column;gap:2px}}
+
+/* Coach roster: image-ready cards with intentional graphics while real portraits are being cleared. */
+.hy-coach-section{padding:78px 0 84px;background:#0d241b;color:#f8f5e9}
+.hy-coach-head{max-width:760px;margin-bottom:28px}
+.hy-coach-head h2{font:700 clamp(29px,3.6vw,44px)/1.3 Georgia,"Noto Serif KR",serif;letter-spacing:-.04em;margin:12px 0}
+.hy-coach-head h2 em{font-style:normal;color:#e4c587}
+.hy-coach-head>p:last-child{color:#cbd9cd;font-size:15px;line-height:1.9}
+.hy-coach-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.hy-coach-card{min-width:0;display:grid;grid-template-columns:minmax(135px,.85fr) minmax(0,1.15fr);background:#f8f8f1;color:#1c3f2d;border-radius:17px;overflow:hidden;border:1px solid #a8a78d;box-shadow:0 18px 40px #06130d55}
+.hy-coach-photo{position:relative;min-height:312px;padding:20px 15px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:radial-gradient(circle at 70% 34%,#71826f90,transparent 38%),linear-gradient(155deg,#0a1d15 13%,#39543f 60%,#17261c)}
+.hy-coach-photo-pro{background:radial-gradient(circle at 65% 35%,#9c986e77,transparent 39%),linear-gradient(150deg,#101c18,#405045 57%,#1b2c24)}
+.hy-coach-photo:before{content:"";position:absolute;width:260px;height:260px;border:1px solid #d7c69235;border-radius:50%;right:-105px;top:34px}
+.hy-coach-photo-line,.hy-coach-photo-foot{position:relative;z-index:1;color:#eee1ba;font-size:9px;letter-spacing:.12em;font-weight:700;line-height:1.5}
+.hy-coach-photo-mark{position:relative;z-index:1;align-self:center;font:700 62px Georgia,serif;color:#eee5c8;text-shadow:0 8px 25px #06140d88}
+.hy-coach-copy{padding:26px 25px 23px;display:flex;flex-direction:column}
+.hy-coach-role{color:#9a7b40!important;font-size:10px!important;letter-spacing:.11em;font-weight:800;margin:0!important}
+.hy-coach-copy h3{font-size:27px;letter-spacing:-.03em;margin:7px 0 9px;line-height:1.35}
+.hy-coach-copy h3 small{display:block;margin-top:3px;font-size:13px;letter-spacing:0;font-weight:700;color:#63816d}
+.hy-coach-copy>p:not(.hy-coach-role){font-size:13px;line-height:1.8;color:#586e5d;margin:0 0 14px}
+.hy-coach-tags{display:flex;gap:6px;flex-wrap:wrap;margin:auto 0 14px}
+.hy-coach-tags span{border:1px solid #d2dccf;background:#ecf1e9;color:#3c6149;border-radius:999px;padding:5px 8px;font-size:10px}
+.hy-coach-copy>a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border-radius:7px;background:#1b422f;color:#fff;font-size:12px;font-weight:800}
+.hy-coach-programs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:23px}
+.hy-coach-programs>div{padding:15px 13px;border:1px solid #69847488;border-radius:9px;background:#204031}
+.hy-coach-programs strong{display:block;font-size:12px;letter-spacing:.08em;color:#f0d6a4}
+.hy-coach-programs span{display:block;margin-top:6px;font-size:12px;line-height:1.55;color:#e0ebe0}
+.hy-coach-note{font-size:11px;color:#bbd0c0;line-height:1.75;margin:16px 0 0}
+.premium-visual-fallback{display:none}
+.premium-visual.image-unavailable .premium-visual-fallback{display:flex;min-height:350px;aspect-ratio:1;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;background:radial-gradient(circle at 60% 32%,#718c6457,transparent 50%),linear-gradient(155deg,#0b281d,#416048)}
+.premium-visual-fallback>span{font-size:11px;color:#f1d9a7;letter-spacing:.2em;font-weight:700}
+.premium-visual-fallback strong{font:700 clamp(26px,4vw,40px)/1.3 Georgia,serif;color:#fff7d9}
+.premium-visual-fallback small{letter-spacing:.15em;color:#efe0b8}
+@media(max-width:1000px){.hy-coach-card{grid-template-columns:1fr}.hy-coach-photo{min-height:210px}.hy-coach-programs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.hy-coach-section{padding:52px 0}.hy-coach-grid{grid-template-columns:1fr;gap:16px}.hy-coach-card{grid-template-columns:minmax(122px,.75fr) minmax(0,1.25fr)}.hy-coach-photo{min-height:295px;padding:14px 10px}.hy-coach-photo-mark{font-size:42px}.hy-coach-photo-line,.hy-coach-photo-foot{font-size:8px}.hy-coach-copy{padding:18px 14px 16px}.hy-coach-copy h3{font-size:23px}.hy-coach-copy>p:not(.hy-coach-role){font-size:12px}.hy-coach-tags span{font-size:9px;padding:4px 6px}.hy-coach-programs{grid-template-columns:1fr 1fr}.hy-coach-programs>div{padding:12px}.hy-coach-programs strong{font-size:10px}.hy-coach-programs span{font-size:11px}}
+@media(max-width:360px){.hy-coach-card{grid-template-columns:1fr}.hy-coach-photo{min-height:190px}}
