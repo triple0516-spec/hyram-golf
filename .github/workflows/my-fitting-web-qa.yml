@@ -4,6 +4,8 @@ on:
     paths:
       - 'web/**'
       - 'qa/test_my_fitting_web.py'
+      - 'qa/test_toss_checkout_static.py'
+      - 'payments-worker/**'
       - 'qa/test_campaign_auth_web.py'
       - 'qa/test_campaign_browser.cjs'
       - 'qa/test_concierge_browser.cjs'
@@ -24,8 +26,12 @@ jobs:
           node --check web/brand-data.js
           node --check web/fitting.js
           node --check web/chat-widget.js
+          node --check web/toss-checkout.js
+          node --check payments-worker/worker.js
       - name: Validate page wiring and storefront disclaimers
         run: python3 qa/test_my_fitting_web.py
+      - name: Validate test-only Toss checkout structure and payment guards
+        run: python3 qa/test_toss_checkout_static.py
       - name: Validate campaign, account preview and local navigation
         run: python3 qa/test_campaign_auth_web.py
       - name: Validate concierge page integration and safe fallback
