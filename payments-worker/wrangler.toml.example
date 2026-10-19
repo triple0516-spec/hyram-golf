@@ -1,0 +1,14 @@
+name = "hyram-toss-test-checkout"
+main = "worker.js"
+compatibility_date = "2026-10-19"
+# Configure a D1 database through Cloudflare, then replace these placeholders.
+[[d1_databases]]
+binding = "DB"
+database_name = "hyram-payments-test"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[vars]
+ALLOWED_ORIGIN = "https://www.hyramgolf.kr"
+PUBLIC_CHECKOUT_URL = "https://www.hyramgolf.kr/checkout.html"
+# Live key support is intentionally absent. Set the three values below as Worker secrets:
+# TOSS_TEST_CLIENT_KEY, TOSS_TEST_SECRET_KEY, ADMIN_API_TOKEN
