@@ -82,6 +82,8 @@ try:
             assert rogue.count() == 1, "Owned ROGUE 5W inventory missing"
             assert rogue.locator(".price").inner_text().strip() == "239,000원", "Unexpected ROGUE sale price"
             assert "실물 재고 1점" in rogue.locator(".meta").inner_text(), "Inventory quantity missing"
+            assert "배송비 판매자 부담" in rogue.locator(".shipping").inner_text(), "Seller-paid shipping missing"
+            assert "0원" in rogue.locator(".shipping").inner_text(), "Buyer shipping fee must be zero"
             photo = rogue.locator(".visual img")
             assert photo.count() == 1, "Owned stock photo missing"
             assert photo.evaluate("(img) => img.complete && img.naturalWidth > 0"), "Stock photo did not load"
