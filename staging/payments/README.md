@@ -18,8 +18,8 @@ This extracts the test-only payment logic from stacked PR #12 without merging PR
 3. Apply `npx wrangler d1 execute hyram-payments-staging --remote --file=./schema.sql` from this directory **only to staging**; verify migration and D1 backup/restore readiness.
 4. Obtain a matched pair of Toss **online test MID** client/secret keys from the [Toss developer center](https://developers.tosspayments.com/). A POS terminal or business dashboard URL is not a web API key.
 5. In Cloudflare Worker encrypted secrets, set `TOSS_TEST_CLIENT_KEY`, `TOSS_TEST_SECRET_KEY` and `ADMIN_API_TOKEN` (32+ random characters). Never put these in GitHub, files, browser JS, commit, or issue.
-6. Deploy `npx wrangler deploy --config wrangler.toml` from this folder to **staging**.
-7. Host this staging-only `checkout.html` plus the two browser scripts on an approved independent HTTPS staging site. Set the **public** `toss-payment-config.js` to the verified Worker HTTPS origin only on that staging host.
+6. After preparing the assets, deploy `npx wrangler deploy --config wrangler.toml` from this folder to **staging**. The resulting Worker URL must exactly match the values of `ALLOWED_ORIGIN` and `PUBLIC_CHECKOUT_URL`; otherwise the fail-closed check blocks payment.
+7. Run `sh prepare-staging-assets.sh` to package only the 3 safe browser assets into `public/` (no Worker source, D1 schema, or secrets). The Wrangler `[assets]` binding serves them on the **same staging Worker HTTPS origin** as the API. `public/toss-payment-config.js` uses `window.location.origin`, so no second hosting project or hardcoded API domain is needed. Confirm `ALLOWED_ORIGIN` and `PUBLIC_CHECKOUT_URL` exactly match your Worker HTTPS hostname before deploying.
 8. Test quote creation from secured operator server/CLI, valid/invalid/expired/duplicated callbacks, mismatched amount rejection, matching Toss payment records, cancellations/refunds and D1 reconciliation; capture redacted QA evidence.
 
 ## Preconditions before live checkout
