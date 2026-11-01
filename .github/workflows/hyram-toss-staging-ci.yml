@@ -20,5 +20,5 @@ jobs:
           python-version: '3.11'
       - name: Verify D1 SQL and test checkout wiring
         run: python staging/payments/checkout-smoke.py
-      - name: Verify mocked Toss server confirmations and idempotency
+      - name: Package public staging assets\n        run: |\n          sh staging/payments/prepare-staging-assets.sh\n          test -f staging/payments/public/checkout.html\n          test -f staging/payments/public/toss-checkout.js\n          grep -q "window.location.origin" staging/payments/public/toss-payment-config.js\n          test ! -f staging/payments/public/worker.mjs\n      - name: Verify mocked Toss server confirmations and idempotency
         run: node --test staging/payments/worker.test.mjs
