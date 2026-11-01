@@ -7,8 +7,13 @@ workers_dev = true
 [vars]
 ENVIRONMENT = "staging"
 ALLOWED_ORIGIN = "https://YOUR-STAGING-WORKER.workers.dev"
-PUBLIC_CHECKOUT_URL = "https://YOUR-STAGING-SITE.example/checkout.html"
-[assets]\ndirectory = "./public"\n# Only explicit API routes invoke the Worker before assets.\nrun_worker_first = ["/admin/*", "/payment/*"]\n\n[[d1_databases]]
+PUBLIC_CHECKOUT_URL = "https://YOUR-STAGING-WORKER.workers.dev/checkout.html"
+[assets]
+directory = "./public"
+# Only explicit API routes invoke the Worker before assets.
+run_worker_first = ["/admin/*", "/payment/*"]
+
+[[d1_databases]]
 binding = "DB"
 database_name = "hyram-payments-staging"
 database_id = "REPLACE_WITH_STAGING_DATABASE_UUID"
