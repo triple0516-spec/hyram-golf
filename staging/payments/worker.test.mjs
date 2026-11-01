@@ -10,7 +10,7 @@ function makeEnv() {
    async first(){return [...rows.values()].find(row=>row.public_token===values[0]) ?? null},
    async run(){
     if(sql.startsWith("INSERT")){const [order_id, public_token, item_name, amount_krw, created_at_ms, expires_at_ms]=values; rows.set(public_token,{order_id,public_token,item_name,amount_krw,created_at_ms,expires_at_ms,status:"PENDING"});return {meta:{changes:1}}}
-    if(sql.includes("status = 'PROCESSING'")){const [token, now]=values;const row=rows.get(token); if(row && row.status==="PENDING"&&row.expires_at_ms>now){row.status="PROCESSING";return {meta:{changes:1}}}return {meta:{changes:0}}}
+    if(sql.startsWith("UPDATE payment_quotes SET status = 'PROCESSING'")){const [token, now]=values;const row=rows.get(token); if(row && row.status==="PENDING"&&row.expires_at_ms>now){row.status="PROCESSING";return {meta:{changes:1}}}return {meta:{changes:0}}}
     if(sql.includes("status = 'PAID'")){const [payment_key,time,token]=values;let row=rows.get(token);if(row?.status==="PROCESSING"){row.status="PAID";row.payment_key=payment_key;row.confirmed_at_ms=time;return {meta:{changes:1}}}return {meta:{changes:0}}}
     if(sql.includes("status = 'REVIEW_REQUIRED'")){const [token]=values;let row=rows.get(token);if(row?.status==="PROCESSING")row.status="REVIEW_REQUIRED";return {meta:{changes:1}}}
     throw Error("Unexpected query");
