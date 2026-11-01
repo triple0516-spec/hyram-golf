@@ -1,0 +1,24 @@
+name: HYRAM core DB staging smoke
+on:
+  pull_request:
+    paths:
+      - 'database/**'
+      - '.github/workflows/hyram-core-staging-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  schema-and-api:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: SQLite schema and constraints
+        run: python -m unittest discover -s database -p 'test_schema.py'
+      - name: Cloudflare Worker API tests (Node builtins only)
+        run: node --test database/core-api.test.mjs
