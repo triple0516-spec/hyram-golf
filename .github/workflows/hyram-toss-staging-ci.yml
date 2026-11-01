@@ -19,6 +19,6 @@ jobs:
         with:
           python-version: '3.11'
       - name: Verify D1 SQL and test checkout wiring
-        run: python -m unittest discover -s staging/payments -p '*smoke.py'
+        run: python staging/payments/checkout-smoke.py
       - name: Verify mocked Toss server confirmations and idempotency
         run: node --test staging/payments/worker.test.mjs
