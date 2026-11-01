@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="name" viewBox="0 0 530 112" width="530" height="112">
+<title id="name">HYRAM GOLF</title>
+<g fill="none">
+<path d="M16 90 C75 102 159 101 287 88" stroke="#cdb47f" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M313 24 V90" stroke="#cdb47f" stroke-opacity=".65" stroke-width="1"/>
+</g>
+<text x="16" y="79" font-family="URW Chancery L, Apple Chancery, Brush Script MT, cursive" font-size="77" font-style="italic" fill="#cdb47f">Hyram</text>
+<text x="334" y="60" font-family="Georgia, Times New Roman, serif" font-size="28" letter-spacing="4" fill="#f3efe5">GOLF</text>
+<text x="335" y="80" font-family="Arial, Helvetica, sans-serif" font-size="8" letter-spacing="1.6" fill="#c6beb0">FITTING · LESSON · CLUBS</text>
+</svg>
