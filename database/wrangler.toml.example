@@ -1,0 +1,12 @@
+# Copy to wrangler.toml locally; never add production credentials.
+name = "hyram-core-staging"
+main = "core-api.mjs"
+compatibility_date = "2026-10-31"
+workers_dev = true
+[vars]
+ENVIRONMENT = "staging"
+ALLOWED_ORIGIN = "https://YOUR-APPROVED-STAGING-WEBSITE.example"
+[[d1_databases]]
+binding = "DB"
+database_name = "hyram-core-staging"
+database_id = "REPLACE_WITH_STAGING_D1_ID"
