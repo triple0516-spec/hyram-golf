@@ -6,9 +6,9 @@ compatibility_date = "2026-11-01"
 workers_dev = true
 [vars]
 ENVIRONMENT = "staging"
-ALLOWED_ORIGIN = "https://YOUR-STAGING-SITE.example"
+ALLOWED_ORIGIN = "https://YOUR-STAGING-WORKER.workers.dev"
 PUBLIC_CHECKOUT_URL = "https://YOUR-STAGING-SITE.example/checkout.html"
-[[d1_databases]]
+[assets]\ndirectory = "./public"\n# Only explicit API routes invoke the Worker before assets.\nrun_worker_first = ["/admin/*", "/payment/*"]\n\n[[d1_databases]]
 binding = "DB"
 database_name = "hyram-payments-staging"
 database_id = "REPLACE_WITH_STAGING_DATABASE_UUID"
