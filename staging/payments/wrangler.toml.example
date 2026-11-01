@@ -1,0 +1,23 @@
+# Copy to wrangler.toml locally and set your actual staging D1 UUID and domains.
+# This intentionally does not deploy without Cloudflare credentials.
+name = "hyram-toss-staging"
+main = "worker.mjs"
+compatibility_date = "2026-11-01"
+workers_dev = true
+[vars]
+ENVIRONMENT = "staging"
+ALLOWED_ORIGIN = "https://YOUR-STAGING-WORKER.workers.dev"
+PUBLIC_CHECKOUT_URL = "https://YOUR-STAGING-WORKER.workers.dev/checkout.html"
+[assets]
+directory = "./public"
+# Only explicit API routes invoke the Worker before assets.
+run_worker_first = ["/admin/*", "/payment/*"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hyram-payments-staging"
+database_id = "REPLACE_WITH_STAGING_DATABASE_UUID"
+# Cloudflare Worker secrets:
+# TOSS_TEST_CLIENT_KEY  (online merchant test_gck_...)
+# TOSS_TEST_SECRET_KEY  (matching test_gsk_...)
+# ADMIN_API_TOKEN (unguessable 32+ characters, never browser-visible)

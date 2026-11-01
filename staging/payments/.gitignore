@@ -1,0 +1,7 @@
+# Cloudflare account-specific configuration and generated static build
+wrangler.toml
+public/
+.dev.vars
+.env
+.env.*
+*.local

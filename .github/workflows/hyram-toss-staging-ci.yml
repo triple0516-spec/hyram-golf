@@ -1,0 +1,31 @@
+name: HYRAM Toss D1 staging tests
+on:
+  pull_request:
+    paths:
+      - 'staging/payments/**'
+      - '.github/workflows/hyram-toss-staging-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-only:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify D1 SQL and test checkout wiring
+        run: python staging/payments/checkout-smoke.py
+      - name: Package public staging assets
+        run: |
+          sh staging/payments/prepare-staging-assets.sh
+          test -f staging/payments/public/checkout.html
+          test -f staging/payments/public/toss-checkout.js
+          grep -q "window.location.origin" staging/payments/public/toss-payment-config.js
+          test ! -f staging/payments/public/worker.mjs
+      - name: Verify mocked Toss server confirmations and idempotency
+        run: node --test staging/payments/worker.test.mjs
