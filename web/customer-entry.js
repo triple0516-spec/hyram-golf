@@ -16,6 +16,20 @@
     ['중고 판매', '쓰던 클럽을 팔고 싶어요', '모델·스펙을 알려주시면 매입 가능 여부 안내', '04'],
   ];
   document.body.classList.add('customer-entry-enabled');
+  if (publicHome) {
+    const brand = document.querySelector('.expert-header a.brand');
+    if (brand) {
+      const logo = document.createElement('img');
+      logo.className = 'customer-brand-logo';
+      logo.src = 'images/hyram-signature-light.svg';
+      logo.alt = '하람골프 · HYRAM GOLF';
+      logo.width = 200; logo.height = 55;
+      brand.replaceChildren(logo);
+      brand.setAttribute('aria-label', '하람골프 홈');
+    }
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) favicon.href = 'images/hyram-friendly-mark.svg';
+  }
   const heroActions = hero.querySelector('.expert-actions');
   if (heroActions) {
     // Replacing the links also removes the old per-link service-prefill listener.

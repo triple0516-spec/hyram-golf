@@ -2,6 +2,7 @@
 .customer-entry-enabled{--ce-ink:#163c2c;--ce-muted:#506657;--ce-line:#d4ded2;--ce-paper:#fffef9;--ce-ground:#f3f5ed;--ce-gold:#8a6a2c}
 .customer-entry-enabled :where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #967323;outline-offset:4px}
 .customer-entry-enabled :where(section[id],main[id]){scroll-margin-top:110px}
+.customer-entry-enabled .expert-header .brand .customer-brand-logo{display:block;width:200px;height:auto;max-width:none;object-fit:contain}
 .customer-entry-enabled .customer-skip{position:fixed;top:-100px;left:16px;z-index:1001;background:#fff;color:#163c2c;padding:14px 20px}.customer-entry-enabled .customer-skip:focus{top:12px}
 .customer-entry-enabled .customer-wrap{max-width:1160px;margin:auto;padding:0 24px}
 .customer-entry-enabled :where(.customer-start,.customer-consult){color:var(--ce-ink);font-family:-apple-system,BlinkMacSystemFont,'Noto Sans KR','Malgun Gothic',sans-serif;line-height:1.7}
@@ -50,6 +51,7 @@
 @media(max-width:780px){
  .customer-entry-enabled{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
  .customer-entry-enabled .customer-wrap{padding-inline:20px}
+ .customer-entry-enabled .expert-header .brand .customer-brand-logo{width:140px}
  .customer-entry-enabled .customer-heading{display:block;margin-bottom:20px}
  .customer-entry-enabled .customer-heading>p{margin-top:10px}
  .customer-entry-enabled .customer-heading>p br{display:none}

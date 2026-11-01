@@ -1,10 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="name" viewBox="0 0 530 112" width="530" height="112">
-<title id="name">HYRAM GOLF</title>
-<g fill="none">
-<path d="M16 90 C75 102 159 101 287 88" stroke="#cdb47f" stroke-width="1.6" stroke-linecap="round"/>
-<path d="M313 24 V90" stroke="#cdb47f" stroke-opacity=".65" stroke-width="1"/>
-</g>
-<text x="16" y="79" font-family="URW Chancery L, Apple Chancery, Brush Script MT, cursive" font-size="77" font-style="italic" fill="#cdb47f">Hyram</text>
-<text x="334" y="60" font-family="Georgia, Times New Roman, serif" font-size="28" letter-spacing="4" fill="#f3efe5">GOLF</text>
-<text x="335" y="80" font-family="Arial, Helvetica, sans-serif" font-size="8" letter-spacing="1.6" fill="#c6beb0">FITTING · LESSON · CLUBS</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 80" width="290" height="80" role="img" aria-labelledby="brand-title brand-description">
+<title id="brand-title">하람골프 · HYRAM GOLF</title>
+<desc id="brand-description">둥근 초록 H 심볼과 한눈에 읽히는 하람골프 한글 로고</desc>
+<rect x="1" y="8" width="64" height="64" rx="19" fill="#173d2d"/>
+<rect x="1.5" y="8.5" width="63" height="63" rx="18.5" fill="none" stroke="#a9bf9f" stroke-opacity=".28"/>
+<path d="M20 25V55M46 30V55M20 40C28 35 38 45 46 40" fill="none" stroke="#faf7ec" stroke-width="5.5" stroke-linecap="round"/>
+<circle cx="46" cy="21" r="4" fill="#d5b779"/>
+<g fill="#faf7ec"><path transform="translate(81.000 49) scale(0.0460 -0.0460)" d="M308 542C173 542 73 451 73 322C73 192 173 101 308 101C442 101 542 192 542 322C542 451 442 542 308 542ZM308 434C370 434 415 393 415 322C415 251 370 209 308 209C245 209 200 251 200 322C200 393 245 434 308 434ZM634 837V-89H767V366H900V476H767V837ZM240 822V701H36V595H576V701H374V822Z"/>
+<path transform="translate(123.320 49) scale(0.0460 -0.0460)" d="M167 247V-79H769V247ZM640 144V26H298V144ZM636 837V287H769V510H892V619H769V837ZM72 791V686H364V608H74V320H152C338 320 456 324 585 349L573 455C459 433 357 428 205 427V509H495V791Z"/>
+<path transform="translate(165.640 49) scale(0.0460 -0.0460)" d="M136 804V699H645C644 655 640 603 629 538L761 529C778 620 778 694 778 749V804ZM351 624V490H43V387H876V490H484V624ZM135 21V-82H803V21H268V81H779V331H134V228H646V172H135Z"/>
+<path transform="translate(207.960 49) scale(0.0460 -0.0460)" d="M41 127V18H880V127ZM110 374V268H808V374H685V651H811V758H105V651H231V374ZM364 651H552V374H364Z"/></g>
+<g fill="#d8c699"><path transform="translate(83.000 70) scale(0.0135 -0.0135)" d="M91 0H239V320H519V0H666V741H519V448H239V741H91Z"/>
+<path transform="translate(95.419 70) scale(0.0135 -0.0135)" d="M217 0H364V271L587 741H433L359 560C337 505 316 453 293 396H289C266 453 246 505 225 560L151 741H-6L217 271Z"/>
+<path transform="translate(105.450 70) scale(0.0135 -0.0135)" d="M239 397V623H335C430 623 482 596 482 516C482 437 430 397 335 397ZM494 0H659L486 303C571 336 627 405 627 516C627 686 504 741 348 741H91V0H239V280H342Z"/>
+<path transform="translate(116.856 70) scale(0.0135 -0.0135)" d="M-4 0H146L198 190H437L489 0H645L408 741H233ZM230 305 252 386C274 463 295 547 315 628H319C341 549 361 463 384 386L406 305Z"/>
+<path transform="translate(127.710 70) scale(0.0135 -0.0135)" d="M91 0H224V309C224 380 212 482 205 552H209L268 378L383 67H468L582 378L642 552H647C639 482 628 380 628 309V0H763V741H599L475 393C460 348 447 299 431 252H426C411 299 397 348 381 393L255 741H91Z"/>
+<path transform="translate(146.690 70) scale(0.0135 -0.0135)" d="M409 -14C511 -14 599 25 650 75V409H386V288H517V142C497 124 460 114 425 114C279 114 206 211 206 372C206 531 290 627 414 627C480 627 522 600 559 565L638 659C590 708 516 754 409 754C212 754 54 611 54 367C54 120 208 -14 409 -14Z"/>
+<path transform="translate(158.570 70) scale(0.0135 -0.0135)" d="M385 -14C581 -14 716 133 716 374C716 614 581 754 385 754C189 754 54 614 54 374C54 133 189 -14 385 -14ZM385 114C275 114 206 216 206 374C206 532 275 627 385 627C495 627 565 532 565 374C565 216 495 114 385 114Z"/>
+<path transform="translate(171.164 70) scale(0.0135 -0.0135)" d="M91 0H540V124H239V741H91Z"/>
+<path transform="translate(181.167 70) scale(0.0135 -0.0135)" d="M91 0H239V300H502V424H239V617H547V741H91Z"/></g>
 </svg>

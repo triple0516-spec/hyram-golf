@@ -22,6 +22,12 @@ def apply(site: Path) -> None:
         source, destination = assets / name, site / name
         if source.resolve() != destination.resolve():
             shutil.copyfile(source, destination)
+    (site / 'images').mkdir(exist_ok=True)
+    for name in ('hyram-signature.svg', 'hyram-signature-light.svg',
+                 'hyram-friendly-mark.svg', 'brand-font-license.txt'):
+        source, destination = assets / 'images' / name, site / 'images' / name
+        if source.resolve() != destination.resolve():
+            shutil.copyfile(source, destination)
     if 'src="customer-entry.js"' not in html:
         backup = site / 'index.html.before-customer-entry'
         if backup.exists():
