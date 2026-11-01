@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HYRAM GOLF · 토스 결제 테스트 전용</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101712;color:#f0f0e6;font:16px/1.6 system-ui,-apple-system,"Noto Sans KR",sans-serif}
+main{max-width:700px;padding:38px 22px;margin:auto}h1{font-size:clamp(25px,4vw,38px);line-height:1.35}
+p{color:#c8d0c9}.notice{border:1px solid #a38b5e;background:#273025;border-radius:10px;padding:16px;color:#e9d9ab}
+.panel{border:1px solid #3f4a3f;border-radius:12px;padding:22px;margin-top:22px}
+strong{color:#eed19b}button{font:inherit;padding:13px 18px;border:0;border-radius:7px;background:#e2c48b;color:#18201b;font-weight:700;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}[hidden]{display:none!important}.widget{background:white;color:#111;border-radius:9px;padding:10px;margin:14px 0}
+a{color:#e2c48b}:focus-visible{outline:3px solid #e2c48b;outline-offset:3px}
+</style></head><body><main>
+<p>HYRAM GOLF · STAGING ONLY</p><h1>토스페이먼츠 테스트 결제</h1>
+<p class="notice"><strong>개발·검증용 화면</strong><br>일반 고객은 이 페이지에서 상품을 주문하거나 실제로 결제할 수 없습니다. 실거래·운영 PG 연결은 별도 승인 후 진행합니다.</p>
+<section class="panel" id="tossTestPanel" aria-labelledby="tossTestHeading">
+<h2 id="tossTestHeading">승인된 테스트 견적</h2>
+<p id="tossQuoteSummary" aria-live="polite"></p>
+<div id="tossWidgetArea" class="widget" hidden>
+<div id="tossPaymentMethods"></div><div id="tossPaymentAgreement"></div>
+<button id="tossPayButton" type="button" disabled>테스트 결제 요청</button>
+</div>
+<p id="tossTestStatus" aria-live="polite">서버에서 발급한 테스트 링크가 필요합니다.</p>
+</section>
+<p>정식 골프클럽 구매 상담은 <a href="https://hyramgolf.kr/" rel="noopener noreferrer">하람골프 홈페이지</a>를 이용해 주세요.</p>
+</main><script src="./toss-payment-config.js"></script><script src="./toss-checkout.js"></script></body></html>
